@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="贪心算法跳跃游戏[55]123456789class Solution:    def canJump(self, nums):        max_can_reach &#x3D; 0        for i in range(len(nums)): #注意            if i &lt;&#x3D; max_can_reach:                max_can_reach &#x3D; max(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪心算法">
+<meta property="og:url" content="http://example.com/2024/03/19/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="算法工程师的日常">
+<meta property="og:description" content="贪心算法跳跃游戏[55]123456789class Solution:    def canJump(self, nums):        max_can_reach &#x3D; 0        for i in range(len(nums)): #注意            if i &lt;&#x3D; max_can_reach:                max_can_reach &#x3D; max(">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-19T15:29:20.000Z">
+<meta property="article:modified_time" content="2024-03-20T13:39:56.080Z">
+<meta property="article:author" content="Tom">
+<meta property="article:tag" content="刷题">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/03/19/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>贪心算法 | 算法工程师的日常</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">算法工程师的日常</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/19/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tom">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="算法工程师的日常">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          贪心算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-19 23:29:20" itemprop="dateCreated datePublished" datetime="2024-03-19T23:29:20+08:00">2024-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-20 21:39:56" itemprop="dateModified" datetime="2024-03-20T21:39:56+08:00">2024-03-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">总结</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="far fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h1><h2 id="跳跃游戏-55"><a href="#跳跃游戏-55" class="headerlink" title="跳跃游戏[55]"></a>跳跃游戏[55]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">canJump</span>(<span class="params">self, nums</span>):</span><br><span class="line">        max_can_reach = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)): <span class="comment">#注意</span></span><br><span class="line">            <span class="keyword">if</span> i &lt;= max_can_reach:</span><br><span class="line">                max_can_reach = <span class="built_in">max</span>(nums[i] + i, max_can_reach)</span><br><span class="line">                <span class="keyword">if</span> max_can_reach &gt;= <span class="built_in">len</span>(nums) - <span class="number">1</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="跳跃游戏II-45"><a href="#跳跃游戏II-45" class="headerlink" title="跳跃游戏II[45]"></a>跳跃游戏II[45]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">jump</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        step = <span class="number">0</span></span><br><span class="line">        end = <span class="number">0</span></span><br><span class="line">        max_can_reach = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)-<span class="number">1</span>):</span><br><span class="line">            max_can_reach = <span class="built_in">max</span>(nums[i]+i, max_can_reach)</span><br><span class="line">            <span class="keyword">if</span> i == end:</span><br><span class="line">                end = max_can_reach</span><br><span class="line">                step+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> step</span><br><span class="line"><span class="comment"># 和上面一致</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">jump</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        step = <span class="number">0</span></span><br><span class="line">        end = <span class="number">0</span></span><br><span class="line">        max_can_reach = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)-<span class="number">1</span>):<span class="comment">#注意</span></span><br><span class="line">            <span class="keyword">if</span> i&lt;= max_can_reach:</span><br><span class="line">                max_can_reach = <span class="built_in">max</span>(nums[i]+i, max_can_reach)</span><br><span class="line">                <span class="keyword">if</span> i == end:</span><br><span class="line">                    end = max_can_reach</span><br><span class="line">                    step+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> step</span><br></pre></td></tr></table></figure>
+<h2 id="摆动序列-376"><a href="#摆动序列-376" class="headerlink" title="摆动序列[376]"></a>摆动序列[376]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wiggleMaxLength</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(nums)==<span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">            direction = <span class="literal">None</span></span><br><span class="line">            res = <span class="number">0</span> </span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(nums)):</span><br><span class="line">                <span class="keyword">if</span> nums[i] == nums[i-<span class="number">1</span>]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                <span class="keyword">elif</span> nums[i] &gt; nums[i-<span class="number">1</span>]:</span><br><span class="line">                    <span class="keyword">if</span> direction == <span class="number">0</span>:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    direction = <span class="number">0</span></span><br><span class="line">                    res += <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> nums[i] &lt; nums[i-<span class="number">1</span>]:</span><br><span class="line">                    <span class="keyword">if</span> direction == <span class="number">1</span>:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    direction = <span class="number">1</span></span><br><span class="line">                    res += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> res + <span class="number">1</span>    </span><br></pre></td></tr></table></figure>
+<h2 id="分发饼干-455"><a href="#分发饼干-455" class="headerlink" title="分发饼干[455]"></a>分发饼干[455]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findContentChildren</span>(<span class="params">self, g: <span class="type">List</span>[<span class="built_in">int</span>], s: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># 将胃口和饼干排序</span></span><br><span class="line">        g.sort()</span><br><span class="line">        s.sort()</span><br><span class="line">        <span class="comment"># 孩子的数量</span></span><br><span class="line">        n = <span class="built_in">len</span>(g)</span><br><span class="line">        <span class="comment"># 饼干的数量</span></span><br><span class="line">        m = <span class="built_in">len</span>(s)</span><br><span class="line">        <span class="comment"># 记录结果</span></span><br><span class="line">        res = <span class="number">0</span> </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="comment"># 从胃口小的开始喂</span></span><br><span class="line">            <span class="keyword">if</span> res &lt; n <span class="keyword">and</span> g[res] &lt;= s[i]:</span><br><span class="line">                res += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<h2 id="最大子序和-53"><a href="#最大子序和-53" class="headerlink" title="最大子序和[53]"></a>最大子序和[53]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxSubArray</span>(<span class="params">self, nums</span>):</span><br><span class="line">        result = <span class="built_in">float</span>(<span class="string">&#x27;-inf&#x27;</span>)  <span class="comment"># 初始化结果为负无穷大</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">            count += nums[i]</span><br><span class="line">            <span class="keyword">if</span> count &gt; result:  <span class="comment"># 取区间累计的最大值（相当于不断确定最大子序终止位置）</span></span><br><span class="line">                result = count</span><br><span class="line">            <span class="keyword">if</span> count &lt;= <span class="number">0</span>:  <span class="comment"># 相当于重置最大子序起始位置，因为遇到负数一定是拉低总和</span></span><br><span class="line">                count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<h2 id="K-次取反后最大化的数组和-1005"><a href="#K-次取反后最大化的数组和-1005" class="headerlink" title="K 次取反后最大化的数组和[1005]"></a>K 次取反后最大化的数组和[1005]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 题解1</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">largestSumAfterKNegations</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        nums.sort(key=<span class="keyword">lambda</span> x: <span class="built_in">abs</span>(x))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> k &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] &lt; <span class="number">0</span>:</span><br><span class="line">                nums[i] = -nums[i]</span><br><span class="line">                k = k - <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> k % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">sum</span>(nums)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">sum</span>(nums) - <span class="number">2</span>*nums[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 错误解法</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">largestSumAfterKNegations</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        nums.sort()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[i]==<span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">sum</span>(nums)</span><br><span class="line">            <span class="keyword">elif</span> k&gt;<span class="number">0</span> <span class="keyword">and</span> nums[i]&lt;<span class="number">0</span>:</span><br><span class="line">                nums[i] = -nums[i]</span><br><span class="line">                k = k-<span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> k&gt;=<span class="number">0</span> <span class="keyword">and</span> nums[i]&gt;<span class="number">0</span>:</span><br><span class="line">                nums[i] = nums[i] <span class="keyword">if</span> k%<span class="number">2</span>==<span class="number">0</span> <span class="keyword">else</span> -nums[i]</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">sum</span>(nums)</span><br></pre></td></tr></table></figure>
+<p>必须对nums按照abs来排序，不然出错<br>还要一种基于heapq的方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">largestSumAfterKNegations</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">import</span> heapq</span><br><span class="line">        heapq.heapify(nums)</span><br><span class="line">        <span class="keyword">while</span> k&gt;<span class="number">0</span>:</span><br><span class="line">            heapq.heappush(nums, -heapq.heappop(nums))</span><br><span class="line">            k-=<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sum</span>(nums)</span><br></pre></td></tr></table></figure>
+<h2 id="加油站-134"><a href="#加油站-134" class="headerlink" title="加油站[134]"></a>加油站[134]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 暴力</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">canCompleteCircuit</span>(<span class="params">self, gas: <span class="type">List</span>[<span class="built_in">int</span>], cost: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cost)):</span><br><span class="line">            index = (i + <span class="number">1</span>)%<span class="built_in">len</span>(cost)</span><br><span class="line">            rest = gas[i] - cost[i]</span><br><span class="line">            <span class="keyword">while</span> rest&gt;=<span class="number">0</span> <span class="keyword">and</span> index!=i:</span><br><span class="line">                rest += gas[index] - cost[index]</span><br><span class="line">                index = (index+<span class="number">1</span>)%<span class="built_in">len</span>(cost)</span><br><span class="line">            <span class="keyword">if</span> rest&gt;=<span class="number">0</span> <span class="keyword">and</span> index==i:</span><br><span class="line">                <span class="keyword">return</span> i</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"><span class="comment"># 贪心</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">canCompleteCircuit</span>(<span class="params">self, gas: <span class="type">List</span>[<span class="built_in">int</span>], cost: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        curSum = <span class="number">0</span></span><br><span class="line">        totalSum = <span class="number">0</span></span><br><span class="line">        idx = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cost)):</span><br><span class="line">            curSum += gas[i] - cost[i]</span><br><span class="line">            totalSum += gas[i] - cost[i]</span><br><span class="line">            <span class="keyword">if</span> curSum&lt;<span class="number">0</span>:</span><br><span class="line">                idx = i + <span class="number">1</span></span><br><span class="line">                curSum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> totalSum &lt;<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> idx</span><br></pre></td></tr></table></figure>
+<p>i从0开始累加rest[i]，和记为curSum，一旦curSum小于零，说明[0, i]区间都不能作为起始位置，因为这个区间选择任何一个位置作为起点，到i这里都会断油，那么起始位置从i+1算起，再从0计算curSum。</p>
+<h2 id="分发糖果-135"><a href="#分发糖果-135" class="headerlink" title="分发糖果[135]"></a>分发糖果[135]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正常解法</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">candy</span>(<span class="params">self, ratings: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        left = [<span class="number">1</span>] * <span class="built_in">len</span>(ratings)</span><br><span class="line">        right = [<span class="number">1</span>] * <span class="built_in">len</span>(ratings)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(ratings)):</span><br><span class="line">            <span class="keyword">if</span> ratings[i] &gt; ratings[i - <span class="number">1</span>]:</span><br><span class="line">                left[i] = left[i - <span class="number">1</span>] + <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(ratings) - <span class="number">2</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> ratings[i] &gt; ratings[i + <span class="number">1</span>]: <span class="comment">#注意</span></span><br><span class="line">                right[i] = right[i+<span class="number">1</span>] + <span class="number">1</span></span><br><span class="line">        s = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(left)):</span><br><span class="line">            s = s + <span class="built_in">max</span>(left[i], right[i])</span><br><span class="line">        <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
+<h2 id="柠檬水找零-860"><a href="#柠檬水找零-860" class="headerlink" title="柠檬水找零[860]"></a>柠檬水找零[860]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">lemonadeChange</span>(<span class="params">self, bills: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        five = <span class="number">0</span></span><br><span class="line">        ten = <span class="number">0</span></span><br><span class="line">        twenty = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> bills:</span><br><span class="line">            <span class="keyword">if</span> i==<span class="number">5</span>:</span><br><span class="line">                five += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> i==<span class="number">10</span>:</span><br><span class="line">                <span class="keyword">if</span> five&gt;<span class="number">0</span>:</span><br><span class="line">                    five -=<span class="number">1</span></span><br><span class="line">                    ten += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">elif</span> i==<span class="number">20</span>:</span><br><span class="line">                <span class="keyword">if</span> ten&gt;<span class="number">0</span> <span class="keyword">and</span> five&gt;<span class="number">0</span>:</span><br><span class="line">                    ten -= <span class="number">1</span></span><br><span class="line">                    five -=<span class="number">1</span></span><br><span class="line">                    twenty += <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> five&gt;=<span class="number">3</span>:</span><br><span class="line">                    five -= <span class="number">3</span></span><br><span class="line">                    twenty += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="根据身高重建队列-406"><a href="#根据身高重建队列-406" class="headerlink" title="根据身高重建队列[406]"></a>根据身高重建队列[406]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reconstructQueue</span>(<span class="params">self, people: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        people.sort(key=<span class="keyword">lambda</span> x:(-x[<span class="number">0</span>],x[<span class="number">1</span>]))</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> people:</span><br><span class="line">            res.insert(i[<span class="number">1</span>], i)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>这里解释的详细 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/queue-reconstruction-by-height/discussion/comments/1809851">https://leetcode.cn/problems/queue-reconstruction-by-height/discussion/comments/1809851</a></p>
+<h2 id="用最少数量的箭引爆气球"><a href="#用最少数量的箭引爆气球" class="headerlink" title="用最少数量的箭引爆气球"></a>用最少数量的箭引爆气球</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findMinArrowShots</span>(<span class="params">self, points: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        result = <span class="number">1</span></span><br><span class="line">        points.sort(key =  <span class="keyword">lambda</span> x: x[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(points)):</span><br><span class="line">            <span class="keyword">if</span> points[i][<span class="number">0</span>] &gt; points[i-<span class="number">1</span>][<span class="number">1</span>]:</span><br><span class="line">                result = result + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                points[i][<span class="number">1</span>] = <span class="built_in">min</span>(points[i][<span class="number">1</span>], points[i-<span class="number">1</span>][<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<h2 id="无重叠区间-435"><a href="#无重叠区间-435" class="headerlink" title="无重叠区间[435]"></a>无重叠区间[435]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eraseOverlapIntervals</span>(<span class="params">self, intervals: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> intervals:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        intervals.sort(key=<span class="keyword">lambda</span> x: x[<span class="number">0</span>])  <span class="comment"># 按照左边界升序排序</span></span><br><span class="line">        </span><br><span class="line">        result = <span class="number">1</span>  <span class="comment"># 不重叠区间数量，初始化为1，因为至少有一个不重叠的区间</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(intervals)):</span><br><span class="line">            <span class="keyword">if</span> intervals[i][<span class="number">0</span>] &gt;= intervals[i - <span class="number">1</span>][<span class="number">1</span>]:  <span class="comment"># 没有重叠</span></span><br><span class="line">                result += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:  <span class="comment"># 重叠情况</span></span><br><span class="line">                intervals[i][<span class="number">1</span>] = <span class="built_in">min</span>(intervals[i - <span class="number">1</span>][<span class="number">1</span>], intervals[i][<span class="number">1</span>])  <span class="comment"># 更新重叠区间的右边界</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(intervals) - result</span><br></pre></td></tr></table></figure>
+<h2 id="划分字母区间-763"><a href="#划分字母区间-763" class="headerlink" title="划分字母区间[763]"></a>划分字母区间[763]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">partitionLabels</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line">        d = defaultdict(<span class="built_in">int</span>)</span><br><span class="line">        <span class="keyword">for</span> index, value <span class="keyword">in</span> <span class="built_in">enumerate</span>(s):</span><br><span class="line">            d[value] = index</span><br><span class="line">        end = <span class="number">0</span></span><br><span class="line">        results = []</span><br><span class="line">        start = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> index, value <span class="keyword">in</span> <span class="built_in">enumerate</span>(s):</span><br><span class="line">            end = <span class="built_in">max</span>(end, d[value])</span><br><span class="line">            <span class="keyword">if</span> index == end:</span><br><span class="line">                results.append(index-start+<span class="number">1</span>)</span><br><span class="line">                start = index+<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<h2 id="合并区间-56"><a href="#合并区间-56" class="headerlink" title="合并区间[56]"></a>合并区间[56]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">self, intervals: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        intervals.sort()</span><br><span class="line">        stack = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> intervals:</span><br><span class="line">            <span class="keyword">if</span> stack <span class="keyword">and</span> i[<span class="number">0</span>] &lt;= stack[-<span class="number">1</span>][<span class="number">1</span>]:</span><br><span class="line">                v = stack.pop()</span><br><span class="line">                stack.append([<span class="built_in">min</span>(v[<span class="number">0</span>],i[<span class="number">0</span>]), <span class="built_in">max</span>(v[<span class="number">1</span>],i[<span class="number">1</span>])])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stack.append(i)</span><br><span class="line">        <span class="keyword">return</span> stack</span><br></pre></td></tr></table></figure>
+
+<h2 id="单调递增的数字-738"><a href="#单调递增的数字-738" class="headerlink" title="单调递增的数字[738]"></a>单调递增的数字[738]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">monotoneIncreasingDigits</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        s = [<span class="built_in">int</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">str</span>(n)]</span><br><span class="line">        max_idx = <span class="number">0</span> </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(s)):</span><br><span class="line">            <span class="keyword">if</span> s[i] &gt; s[i-<span class="number">1</span>]:</span><br><span class="line">                max_idx = i</span><br><span class="line">            <span class="keyword">elif</span> s[i] == s[i-<span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">elif</span> s[i] &lt; s[i-<span class="number">1</span>]:</span><br><span class="line">                s[max_idx] = s[max_idx] - <span class="number">1</span></span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(max_idx+<span class="number">1</span>, <span class="built_in">len</span>(s)):</span><br><span class="line">                    s[j] = <span class="number">9</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(<span class="string">&quot;&quot;</span>.join([<span class="built_in">str</span>(k) <span class="keyword">for</span> k <span class="keyword">in</span> s]))</span><br></pre></td></tr></table></figure>
+<p>来自 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/monotone-increasing-digits/solutions/521966/jian-dan-tan-xin-shou-ba-shou-jiao-xue-k-a0mp/">https://leetcode.cn/problems/monotone-increasing-digits/solutions/521966/jian-dan-tan-xin-shou-ba-shou-jiao-xue-k-a0mp/</a><br>按照自己的写法来的</p>
+<h2 id="分割数组为连续子序列-659"><a href="#分割数组为连续子序列-659" class="headerlink" title="分割数组为连续子序列[659]"></a>分割数组为连续子序列[659]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPossible</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        counter = Counter(nums)</span><br><span class="line">        tail = Counter()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> counter[i] <span class="keyword">and</span> tail[i - <span class="number">1</span>]:  <span class="comment"># 可以衔接</span></span><br><span class="line">                counter[i] -= <span class="number">1</span></span><br><span class="line">                tail[i - <span class="number">1</span>] -= <span class="number">1</span></span><br><span class="line">                tail[i] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span> <span class="comment">#注意这里</span></span><br><span class="line">            <span class="keyword">if</span> counter[i] <span class="keyword">and</span> counter[i + <span class="number">1</span>] <span class="keyword">and</span> counter[i + <span class="number">2</span>]:  <span class="comment"># 可以生成新序列</span></span><br><span class="line">                tail[i + <span class="number">2</span>] += <span class="number">1</span></span><br><span class="line">                counter[i] -= <span class="number">1</span></span><br><span class="line">                counter[i + <span class="number">1</span>] -= <span class="number">1</span></span><br><span class="line">                counter[i + <span class="number">2</span>] -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span> <span class="comment">#注意这里</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> counter.items():</span><br><span class="line">            <span class="keyword">if</span> v &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>来自 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/split-array-into-consecutive-subsequences/description/">https://leetcode.cn/problems/split-array-into-consecutive-subsequences/description/</a> 还有一个方法说的很好 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/split-array-into-consecutive-subsequences/solutions/376129/zui-jian-dan-de-pythonban-ben-by-semirondo/">https://leetcode.cn/problems/split-array-into-consecutive-subsequences/solutions/376129/zui-jian-dan-de-pythonban-ben-by-semirondo/</a> 这个方法的思路很清晰，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPossible</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> res:</span><br><span class="line">                <span class="keyword">if</span> n == v[-<span class="number">1</span>] + <span class="number">1</span>:</span><br><span class="line">                    v.append(n)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.insert(<span class="number">0</span>,[n])</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">all</span>([<span class="built_in">len</span>(v)&gt;=<span class="number">3</span> <span class="keyword">for</span> v <span class="keyword">in</span> res])</span><br></pre></td></tr></table></figure>
+<p>例如 2， 3， 4， 4， 5， 5， 6<br>顺序如下<br>[[2]]<br>[[2, 3]]<br>[[2, 3, 4]]<br>4不能后接，前插一行<br>[[4], [2, 3, 4]]<br>[[4, 5], [2, 3, 4]]<br>[[4, 5], [2, 3, 4, 5]]<br>[[4, 5, 6], [2, 3, 4, 5]]<br>最后比较是否所有序列长度大于等于3就可以了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%88%B7%E9%A2%98/" rel="tag"># 刷题</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/19/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3&%E5%8F%8C%E6%8C%87%E9%92%88/" rel="prev" title="滑动窗口&双指针">
+      <i class="fa fa-chevron-left"></i> 滑动窗口&双指针
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/19/%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="特殊数据结构">
+      特殊数据结构 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">贪心算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F-55"><span class="nav-number">1.1.</span> <span class="nav-text">跳跃游戏[55]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8FII-45"><span class="nav-number">1.2.</span> <span class="nav-text">跳跃游戏II[45]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%86%E5%8A%A8%E5%BA%8F%E5%88%97-376"><span class="nav-number">1.3.</span> <span class="nav-text">摆动序列[376]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%8F%91%E9%A5%BC%E5%B9%B2-455"><span class="nav-number">1.4.</span> <span class="nav-text">分发饼干[455]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C-53"><span class="nav-number">1.5.</span> <span class="nav-text">最大子序和[53]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-%E6%AC%A1%E5%8F%96%E5%8F%8D%E5%90%8E%E6%9C%80%E5%A4%A7%E5%8C%96%E7%9A%84%E6%95%B0%E7%BB%84%E5%92%8C-1005"><span class="nav-number">1.6.</span> <span class="nav-text">K 次取反后最大化的数组和[1005]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E6%B2%B9%E7%AB%99-134"><span class="nav-number">1.7.</span> <span class="nav-text">加油站[134]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%8F%91%E7%B3%96%E6%9E%9C-135"><span class="nav-number">1.8.</span> <span class="nav-text">分发糖果[135]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A0%E6%AA%AC%E6%B0%B4%E6%89%BE%E9%9B%B6-860"><span class="nav-number">1.9.</span> <span class="nav-text">柠檬水找零[860]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E8%BA%AB%E9%AB%98%E9%87%8D%E5%BB%BA%E9%98%9F%E5%88%97-406"><span class="nav-number">1.10.</span> <span class="nav-text">根据身高重建队列[406]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%9C%80%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84%E7%AE%AD%E5%BC%95%E7%88%86%E6%B0%94%E7%90%83"><span class="nav-number">1.11.</span> <span class="nav-text">用最少数量的箭引爆气球</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E9%87%8D%E5%8F%A0%E5%8C%BA%E9%97%B4-435"><span class="nav-number">1.12.</span> <span class="nav-text">无重叠区间[435]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%92%E5%88%86%E5%AD%97%E6%AF%8D%E5%8C%BA%E9%97%B4-763"><span class="nav-number">1.13.</span> <span class="nav-text">划分字母区间[763]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4-56"><span class="nav-number">1.14.</span> <span class="nav-text">合并区间[56]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E8%B0%83%E9%80%92%E5%A2%9E%E7%9A%84%E6%95%B0%E5%AD%97-738"><span class="nav-number">1.15.</span> <span class="nav-text">单调递增的数字[738]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E6%95%B0%E7%BB%84%E4%B8%BA%E8%BF%9E%E7%BB%AD%E5%AD%90%E5%BA%8F%E5%88%97-659"><span class="nav-number">1.16.</span> <span class="nav-text">分割数组为连续子序列[659]</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tom</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tom</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
