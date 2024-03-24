@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 7.1.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/tree/master/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/tree/master/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/tree/master/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/tree/master/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/tree/master/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/tree/master/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lilitom.github.io","root":"/tree/master/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lilitom.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="总结 大纲 相关细节  如果题目求最大值，则dp初始化为[-float(“inf”)]*n的数据 循环比较一般使用dp[i] &#x3D; max(dp[i], dp[j] + nums[i])，而不是dp[i] &#x3D; max(dp[i], dp[j]) + nums[i]  序列 单序列 模板  一般初始化的时候，都会dp &#x3D; [0] * len(str),而不是dp &#x3D; [0] * (len(str)+1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="动态规划">
-<meta property="og:url" content="https://lilitom.github.io/tree/master/2024/03/19/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html">
+<meta property="og:url" content="https://lilitom.github.io/2024/03/19/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html">
 <meta property="og:site_name" content="算法工程师的日常">
 <meta property="og:description" content="总结 大纲 相关细节  如果题目求最大值，则dp初始化为[-float(“inf”)]*n的数据 循环比较一般使用dp[i] &#x3D; max(dp[i], dp[j] + nums[i])，而不是dp[i] &#x3D; max(dp[i], dp[j]) + nums[i]  序列 单序列 模板  一般初始化的时候，都会dp &#x3D; [0] * len(str),而不是dp &#x3D; [0] * (len(str)+1">
 <meta property="og:locale" content="zh_CN">
@@ -36,7 +36,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic.leetcode-cn.com/17dc7e2a1d0cb9916917e2121ec59d838bc453a4c83df1f60b2f28f10a1f986e-image.png">
 
-<link rel="canonical" href="https://lilitom.github.io/tree/master/2024/03/19/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+<link rel="canonical" href="https://lilitom.github.io/2024/03/19/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
 
 
 <script id="page-configurations">
@@ -100,7 +100,7 @@
 
   <div class="site-meta">
 
-    <a href="/tree/master/" class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <h1 class="site-title">算法工程师的日常</h1>
       <span class="logo-line-after"><i></i></span>
@@ -121,42 +121,42 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/tree/master/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/tree/master/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tree/master/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/tree/master/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/tree/master/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-schedule">
 
-    <a href="/tree/master/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
 
-    <a href="/tree/master/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
 
   </li>
         <li class="menu-item menu-item-commonweal">
 
-    <a href="/tree/master/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -214,10 +214,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lilitom.github.io/tree/master/2024/03/19/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+    <link itemprop="mainEntityOfPage" href="https://lilitom.github.io/2024/03/19/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/tree/master/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Tom">
       <meta itemprop="description" content="">
     </span>
@@ -252,11 +252,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/tree/master/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/tree/master/categories/LeetCode/%E9%A2%98%E7%9B%AE%E6%B1%87%E6%80%BB/" itemprop="url" rel="index"><span itemprop="name">题目汇总</span></a>
+                  <a href="/categories/LeetCode/%E9%A2%98%E7%9B%AE%E6%B1%87%E6%80%BB/" itemprop="url" rel="index"><span itemprop="name">题目汇总</span></a>
                 </span>
             </span>
 
@@ -554,7 +554,7 @@ dp[i] = sum(dp[i-j]) j&lt;=i.解法如下</p>
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tree/master/tags/%E5%88%B7%E9%A2%98/" rel="tag"># 刷题</a>
+              <a href="/tags/%E5%88%B7%E9%A2%98/" rel="tag"># 刷题</a>
           </div>
 
         
@@ -563,11 +563,11 @@ dp[i] = sum(dp[i-j]) j&lt;=i.解法如下</p>
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/tree/master/2024/03/19/leetcode/%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="prev" title="特殊数据结构">
+    <a href="/2024/03/19/leetcode/%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="prev" title="特殊数据结构">
       <i class="fa fa-chevron-left"></i> 特殊数据结构
     </a></div>
       <div class="post-nav-item">
-    <a href="/tree/master/2024/03/19/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="next" title="二叉树">
+    <a href="/2024/03/19/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="next" title="二叉树">
       二叉树 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -640,20 +640,20 @@ dp[i] = sum(dp[i-j]) j&lt;=i.解法如下</p>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/tree/master/archives/">
+          <a href="/archives/">
         
           <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/tree/master/categories/">
+            <a href="/categories/">
           
         <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tree/master/tags/">
+            <a href="/tags/">
           
         <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
@@ -725,30 +725,30 @@ dp[i] = sum(dp[i-j]) j&lt;=i.解法如下</p>
   </div>
 
   
-  <script src="/tree/master/lib/anime.min.js"></script>
-  <script src="/tree/master/lib/velocity/velocity.min.js"></script>
-  <script src="/tree/master/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/tree/master/js/utils.js"></script>
+<script src="/js/utils.js"></script>
 
-<script src="/tree/master/js/motion.js"></script>
-
-
-<script src="/tree/master/js/schemes/pisces.js"></script>
+<script src="/js/motion.js"></script>
 
 
-<script src="/tree/master/js/next-boot.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/tree/master/js/local-search.js"></script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
