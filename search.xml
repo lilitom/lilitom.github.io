@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>强化学习面试题</title>
-    <url>/2024/03/19/deep_learning/ch10/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch10/</url>
     <content><![CDATA[<h1>强化学习</h1>
 <h2 id="10-1-强化学习的主要特点？">10.1 强化学习的主要特点？</h2>
 <p>其他许多机器学习算法中学习器都是学得怎样做，而RL是在尝试的过程中学习到在特定的情境下选择哪种行动可以得到最大的回报。在很多场景中，当前的行动不仅会影响当前的rewards，还会影响之后的状态和一系列的rewards。RL最重要的3个特定在于：<br>
@@ -89,7 +89,7 @@
   </entry>
   <entry>
     <title>数学基础面试题</title>
-    <url>/2024/03/19/deep_learning/ch1/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch1/</url>
     <content><![CDATA[<h1>数学基础</h1>
 <p>深度学习通常又需要哪些数学基础？深度学习里的数学到底难在哪里？通常初学者都会有这些问题，在网络推荐及书本推荐里，经常看到会列出一系列数学科目，比如微积分、线性代数、概率论、复变函数、数值计算、优化理论、信息论等等。这些数学知识有相关性，但实际上按照这样的知识范围来学习，学习成本会很久，而且会很枯燥，本章我们通过选举一些数学基础里容易混淆的一些概念做以介绍，帮助大家更好的理清这些易混淆概念之间的关系。</p>
 <h2 id="1-1-向量和矩阵">1.1 向量和矩阵</h2>
@@ -571,7 +571,7 @@ $$
   </entry>
   <entry>
     <title>迁移学习面试题</title>
-    <url>/2024/03/19/deep_learning/ch11/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch11/</url>
     <content><![CDATA[<h1>迁移学习</h1>
 <p>​	本章主要简明地介绍了迁移学习的基本概念、迁移学习的必要性、研究领域和基本方法。重点介绍了几大类常用的迁移学习方法：数据分布自适应方法、特征选择方法、子空间学习方法、以及目前最热门的深度迁移学习方法。除此之外，我们也结合最近的一些研究成果对未来迁移学习进行了一些展望。并提供了一些迁移学习领域的常用学习资源，以方便感兴趣的读者快速开始学习。</p>
 <h2 id="11-1-迁移学习基础知识">11.1 迁移学习基础知识</h2>
@@ -1012,7 +1012,7 @@ Research</em>, 17(59):1-35.</p>
   </entry>
   <entry>
     <title>网络搭建及训练面试题</title>
-    <url>/2024/03/19/deep_learning/ch12/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch12/</url>
     <content><![CDATA[<h1>网络搭建及训练</h1>
 <h1>12.1 TensorFlow</h1>
 <h2 id="12-1-1-TensorFlow是什么？">12.1.1 TensorFlow是什么？</h2>
@@ -1392,7 +1392,7 @@ ILSVRC 2017 已是最后一届举办.2018年起，将由WebVision竞赛（Challe
   </entry>
   <entry>
     <title>超参数调整面试题</title>
-    <url>/2024/03/19/deep_learning/ch14/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch14/</url>
     <content><![CDATA[<h1>超参数调整</h1>
 <h2 id="14-1-写在前面">14.1 写在前面</h2>
 <p>​	关于训练深度学习模型最难的事情之一是你要处理的参数的数量。无论是从网络本身的层宽（宽度）、层数（深度）、连接方式，还是损失函数的超参数设计和调试，亦或者是学习率、批样本数量、优化器参数等等。这些大量的参数都会有网络模型最终的有效容限直接或者间接的影响。面对如此众多的参数，如果我们要一一对其优化调整，所需的无论是时间、资源都是不切实际。结果证实一些超参数比其它的更为重要，因此认识各个超参数的作用和其可能会造成的影响是深度学习训练中必不可少的一项重要技能。</p>
@@ -1736,7 +1736,7 @@ $$
   </entry>
   <entry>
     <title>优化算法面试题</title>
-    <url>/2024/03/19/deep_learning/ch13/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch13/</url>
     <content><![CDATA[<h1>优化算法</h1>
 <h2 id="13-1-如何解决训练样本少的问题">13.1 如何解决训练样本少的问题</h2>
 <p>目前大部分的深度学习模型仍然需要海量的数据支持。例如 ImageNet 数据就拥有1400多万的图片。而现实生产环境中，数据集通常较小，只有几万甚至几百个样本。这时候，如何在这种情况下应用深度学习呢?<br>
@@ -2031,7 +2031,7 @@ $$
   </entry>
   <entry>
     <title>异构计算， GPU和框架选型指南面试题</title>
-    <url>/2024/03/19/deep_learning/ch15/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch15/</url>
     <content><![CDATA[<h1>异构计算， GPU和框架选型指南</h1>
 <p>深度学习训练和推理的过程中，会涉及到大量的向量(vector)，矩阵(matrix)和张量(tensor)操作，通常需要大量的浮点计算，包括高精度（在训练的时候）和低精度（在推理和部署的时候）。GPU， 作为一种通用可编程的加速器，最初设计是用来进行图形处理和渲染功能，但是从2007年开始，英伟达(NVIDIA)公司提出了第一个可编程通用计算平台（GPU），同时提出了CUDA框架，从此开启了GPU用于通用计算的新纪元。此后，不计其数的科研人员和开发者，对各种不同类型的算法用CUDA进行（部分）改写，从而达到几倍到数百倍的加速效果。尤其是在机器学习，特别是深度学习的浪潮来临后，GPU加速已经是各类工具实现的基本底层构架之一。本章里，会简单介绍GPU的基本架构，性能指标，框架选择等等和深度学习相关的内容。</p>
 <h2 id="15-1-什么是异构计算？">15.1 什么是异构计算？</h2>
@@ -2438,7 +2438,7 @@ mxnet是dmlc社区推出的深度学习框架，在2017年被亚马逊指定为�
   </entry>
   <entry>
     <title>NLP面试题</title>
-    <url>/2024/03/19/deep_learning/ch16/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch16/</url>
     <content><![CDATA[<h1>NLP</h1>
 <h2 id="16-0-NLP-发展史简述">16.0 NLP 发展史简述</h2>
 <p>50多年来 NLP 的历史发展可以分为三个浪潮，前两波以理性主义和经验主义的形式出现，为当前的深度学习浪潮铺平了道路。NLP的深层学习革命的主要支柱是: （1）语言嵌入实体的分布式表征，（2）由于嵌入而产生的语义泛化， （3）自然语言的大跨度深序列建模，（4）能够从低到高表示语言层次的分层网络，以及（5）解决许多联合 NLP 问题的端对端深度学习方法。</p>
@@ -2497,7 +2497,7 @@ mxnet是dmlc社区推出的深度学习框架，在2017年被亚马逊指定为�
   </entry>
   <entry>
     <title>经典网络面试题</title>
-    <url>/2024/03/19/deep_learning/ch4/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch4/</url>
     <content><![CDATA[<h1>经典网络解读</h1>
 <h2 id="4-1-LeNet-5">4.1 LeNet-5</h2>
 <h3 id="4-1-1-模型介绍">4.1.1 模型介绍</h3>
@@ -3213,7 +3213,7 @@ the Impact of Residual Connections on Learning</a>, 2016.</p>
   </entry>
   <entry>
     <title>卷积神经网络面试题</title>
-    <url>/2024/03/19/deep_learning/ch5/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch5/</url>
     <content><![CDATA[<h1>卷积神经网络（CNN）</h1>
 <p>​	卷积神经网络是一种用来处理局部和整体相关性的计算网络结构，被应用在图像识别、自然语言处理甚至是语音识别领域，因为图像数据具有显著的局部与整体关系，其在图像识别领域的应用获得了巨大的成功。</p>
 <h2 id="5-1-卷积神经网络的组成层">5.1 卷积神经网络的组成层</h2>
@@ -3797,7 +3797,7 @@ f(x)=\begin{cases}
   </entry>
   <entry>
     <title>深度学习基础面试题</title>
-    <url>/2024/03/19/deep_learning/ch3/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch3/</url>
     <content><![CDATA[<h1>深度学习基础</h1>
 <h2 id="3-1-基本概念">3.1 基本概念</h2>
 <h3 id="3-1-1-神经网络组成？">3.1.1 神经网络组成？</h3>
@@ -4813,7 +4813,7 @@ $$
   </entry>
   <entry>
     <title>循环神经网络面试题</title>
-    <url>/2024/03/19/deep_learning/ch6/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch6/</url>
     <content><![CDATA[<h1>循环神经网络(RNN)</h1>
 <h2 id="6-1-为什么需要RNN？">6.1 为什么需要RNN？</h2>
 <p>​	时间序列数据是指在不同时间点上收集到的数据，这类数据反映了某一事物、现象等随时间的变化状态或程度。一般的神经网络，在训练数据足够、算法模型优越的情况下，给定特定的x，就能得到期望y。其一般处理单个的输入，前一个输入和后一个输入完全无关，但实际应用中，某些任务需要能够更好的处理序列的信息，即前面的输入和后面的输入是有关系的。比如：</p>
@@ -5199,7 +5199,7 @@ SRNs网络结构如下图所示：</li>
   </entry>
   <entry>
     <title>生成对抗网络面试题</title>
-    <url>/2024/03/19/deep_learning/ch7/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch7/</url>
     <content><![CDATA[<h1>生成对抗网络</h1>
 <h2 id="7-1-GAN基本概念">7.1 GAN基本概念</h2>
 <h3 id="7-1-1-如何通俗理解GAN？">7.1.1 如何通俗理解GAN？</h3>
@@ -5617,7 +5617,7 @@ $$
   </entry>
   <entry>
     <title>二分和查找</title>
-    <url>/2024/03/19/leetcode/%E4%BA%8C%E5%88%86%E5%92%8C%E6%9F%A5%E6%89%BE/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E4%BA%8C%E5%88%86%E5%92%8C%E6%9F%A5%E6%89%BE/</url>
     <content><![CDATA[<h1>二分和查找类</h1>
 <h2 id="基础思路">基础思路</h2>
 <p>在二分查找中，需要注意的是边界的问题，其中很多小的点，很容易出现问题，一般的解法如下所示：注意哈，写的时候，要hihg = len(nums) - 1, 不要忘了写成len(nums)</p>
@@ -5773,7 +5773,7 @@ $$
   </entry>
   <entry>
     <title>机器学习基础面试题</title>
-    <url>/2024/03/19/deep_learning/ch2/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch2/</url>
     <content><![CDATA[<h1>机器学习基础</h1>
 <p>​	机器学习起源于上世纪50年代，1959年在IBM工作的Arthur Samuel设计了一个下棋程序，这个程序具有学习的能力，它可以在不断的对弈中提高自己。由此提出了“机器学习”这个概念，它是一个结合了多个学科如概率论，优化理论，统计等，最终在计算机上实现自我获取新知识，学习改善自己的这样一个研究领域。机器学习是人工智能的一个子集，目前已经发展出许多有用的方法，比如支持向量机，回归，决策树，随机森林，强化方法，集成学习，深度学习等等，一定程度上可以帮助人们完成一些数据预测，自动化，自动决策，最优化等初步替代脑力的任务。本章我们主要介绍下机器学习的基本概念、监督学习、分类算法、逻辑回归、代价函数、损失函数、LDA、PCA、决策树、支持向量机、EM算法、聚类和降维以及模型评估有哪些方法、指标等等。</p>
 <h2 id="2-1-基本概念">2.1 基本概念</h2>
@@ -8399,7 +8399,7 @@ $$
   </entry>
   <entry>
     <title>图像分割面试题</title>
-    <url>/2024/03/19/deep_learning/ch9/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch9/</url>
     <content><![CDATA[<h1>图像分割</h1>
 <h2 id="9-1-图像分割算法分类？">9.1 图像分割算法分类？</h2>
 <p>图像分割是预测图像中每一个像素所属的类别或者物体。基于深度学习的图像分割算法主要分为两类：</p>
@@ -9102,7 +9102,7 @@ TODO
   </entry>
   <entry>
     <title>目标检测面试题</title>
-    <url>/2024/03/19/deep_learning/ch8/</url>
+    <url>/tree/master/2024/03/19/deep_learning/ch8/</url>
     <content><![CDATA[<h1>目标检测</h1>
 <h2 id="8-1-基本概念">8.1 基本概念</h2>
 <h3 id="8-1-1-什么是目标检测？">8.1.1 什么是目标检测？</h3>
@@ -10216,7 +10216,7 @@ mmdetection代码高度模块化，十分好用和便利，更详细的文档直
   </entry>
   <entry>
     <title>小抄</title>
-    <url>/2024/03/19/leetcode/%E5%B0%8F%E6%8A%84/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E5%B0%8F%E6%8A%84/</url>
     <content><![CDATA[<h1>快速初始化方法</h1>
 <h2 id="zip用于旋转">zip用于旋转</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">list</span>(<span class="built_in">zip</span>(*a))[::-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
@@ -10407,7 +10407,7 @@ b=a[:] 这样就不会了</p>
   </entry>
   <entry>
     <title>二叉树</title>
-    <url>/2024/03/19/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
     <content><![CDATA[<h1>总结</h1>
 <h2 id="大纲">大纲</h2>
 <p><img src="https://note.youdao.com/yws/res/9196/WEBRESOURCE074bd40e4844194049d30d776bac9322" alt="微信截图_20231210121917.png"></p>
@@ -10541,7 +10541,7 @@ b=a[:] 这样就不会了</p>
   </entry>
   <entry>
     <title>动态规划</title>
-    <url>/2024/03/19/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
     <content><![CDATA[<h1>总结</h1>
 <h2 id="大纲">大纲</h2>
 <h2 id="相关细节">相关细节</h2>
@@ -10820,7 +10820,7 @@ dp[i] = sum(dp[i-j]) j&lt;=i.解法如下</p>
   </entry>
   <entry>
     <title>特殊数据结构</title>
-    <url>/2024/03/19/leetcode/%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<h1>特殊数据结构</h1>
 <h2 id="单调栈">单调栈</h2>
 <h3 id="模板">模板</h3>
@@ -10874,7 +10874,7 @@ dp[i] = sum(dp[i-j]) j&lt;=i.解法如下</p>
   </entry>
   <entry>
     <title>数组&amp;数学</title>
-    <url>/2024/03/19/leetcode/%E6%95%B0%E7%BB%84&amp;%E6%95%B0%E5%AD%A6/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E6%95%B0%E7%BB%84&amp;%E6%95%B0%E5%AD%A6/</url>
     <content><![CDATA[<h1>螺旋矩阵系列</h1>
 <h2 id="螺旋矩阵">螺旋矩阵</h2>
 <p>题号为54，位于<a href="https://leetcode.cn/problems/spiral-matrix/description/">https://leetcode.cn/problems/spiral-matrix/description/</a> 题解如下</p>
@@ -11170,7 +11170,7 @@ nums[nums[i]-1],nums[i] = nums[i], nums[nums[i]-1]不能写成nums[i], nums[nums
   </entry>
   <entry>
     <title>贪心算法</title>
-    <url>/2024/03/19/leetcode/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<h1>贪心算法</h1>
 <h2 id="跳跃游戏-55">跳跃游戏[55]</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">canJump</span>(<span class="params">self, nums</span>):</span><br><span class="line">        max_can_reach = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)): <span class="comment">#注意</span></span><br><span class="line">            <span class="keyword">if</span> i &lt;= max_can_reach:</span><br><span class="line">                max_can_reach = <span class="built_in">max</span>(nums[i] + i, max_can_reach)</span><br><span class="line">                <span class="keyword">if</span> max_can_reach &gt;= <span class="built_in">len</span>(nums) - <span class="number">1</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
@@ -11235,7 +11235,7 @@ nums[nums[i]-1],nums[i] = nums[i], nums[nums[i]-1]不能写成nums[i], nums[nums
   </entry>
   <entry>
     <title>滑动窗口&amp;双指针</title>
-    <url>/2024/03/19/leetcode/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3&amp;%E5%8F%8C%E6%8C%87%E9%92%88/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3&amp;%E5%8F%8C%E6%8C%87%E9%92%88/</url>
     <content><![CDATA[<h1>滑动窗口</h1>
 <h2 id="模板">模板</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">findSubArray</span>(<span class="params">nums</span>):</span><br><span class="line">    N = <span class="built_in">len</span>(nums) <span class="comment"># 数组/字符串长度</span></span><br><span class="line">    left, right = <span class="number">0</span>, <span class="number">0</span> <span class="comment"># 双指针，表示当前遍历的区间[left, right]，闭区间</span></span><br><span class="line">    sums = <span class="number">0</span> <span class="comment"># 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数</span></span><br><span class="line">    res = <span class="number">0</span> <span class="comment"># 保存最大的满足题目要求的 子数组/子串 长度</span></span><br><span class="line">    <span class="keyword">while</span> right &lt; N: <span class="comment"># 当右边的指针没有搜索到 数组/字符串 的结尾</span></span><br><span class="line">        sums += nums[right] <span class="comment"># 增加当前右边指针的数字/字符的求和/计数</span></span><br><span class="line">        <span class="keyword">while</span> sums 符合题意：<span class="comment"># </span></span><br><span class="line">            res = <span class="built_in">max</span>(res, right - left + <span class="number">1</span>) <span class="comment"># 需要更新结果 </span></span><br><span class="line">            sums -= nums[left] <span class="comment">#移除值 </span></span><br><span class="line">            left += <span class="number">1</span>   <span class="comment">#移动左指针</span></span><br><span class="line">        right += <span class="number">1</span> <span class="comment"># 移动右指针，去探索新的区间</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
@@ -11360,7 +11360,7 @@ nums[nums[i]-1],nums[i] = nums[i], nums[nums[i]-1]不能写成nums[i], nums[nums
   </entry>
   <entry>
     <title>递归</title>
-    <url>/2024/03/19/leetcode/%E9%80%92%E5%BD%92/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E9%80%92%E5%BD%92/</url>
     <content><![CDATA[<h1>递归题目</h1>
 <h2 id="递归">递归</h2>
 <h3 id="括号生成-22">括号生成[22]</h3>
@@ -11546,7 +11546,7 @@ return res
   </entry>
   <entry>
     <title>集成学习</title>
-    <url>/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/ens_learning/</url>
+    <url>/tree/master/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/ens_learning/</url>
     <content><![CDATA[<h1>集成学习方法</h1>
 <h2 id="bagging">bagging</h2>
 <h3 id="bagging和boosting区别">bagging和boosting区别</h3>
@@ -11675,7 +11675,7 @@ Margin理论讨论的主要是学习算法在训练样本上的信心，学习�
   </entry>
   <entry>
     <title>链表</title>
-    <url>/2024/03/19/leetcode/%E9%93%BE%E8%A1%A8/</url>
+    <url>/tree/master/2024/03/19/leetcode/%E9%93%BE%E8%A1%A8/</url>
     <content><![CDATA[<h1>单链表</h1>
 <h2 id="总结基础操作">总结基础操作</h2>
 <h3 id="反转后保留head和尾部">反转后保留head和尾部</h3>
@@ -11872,7 +11872,7 @@ node1 = node2
   </entry>
   <entry>
     <title>推荐系统常见模型</title>
-    <url>/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/rec_common_mod/</url>
+    <url>/tree/master/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/rec_common_mod/</url>
     <content><![CDATA[<h1>推荐系统</h1>
 <h2 id="推荐理论">推荐理论</h2>
 <h2 id="算法模型">算法模型</h2>
@@ -11921,7 +11921,7 @@ node1 = node2
   </entry>
   <entry>
     <title>线性模型与经典算法</title>
-    <url>/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/linear_model_and_class_algorithm/</url>
+    <url>/tree/master/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/linear_model_and_class_algorithm/</url>
     <content><![CDATA[<h1>线性模型与经典算法</h1>
 <h2 id="PLA-感知机">PLA(感知机)</h2>
 <h3 id="简单介绍下感知机算法？">简单介绍下感知机算法？</h3>
@@ -12734,7 +12734,7 @@ $$
   </entry>
   <entry>
     <title>非监督学习</title>
-    <url>/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/uns_learning/</url>
+    <url>/tree/master/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/uns_learning/</url>
     <content><![CDATA[<h1>非监督学习</h1>
 <h2 id="相关概念">相关概念</h2>
 <h3 id="什么是非监督学习？">什么是非监督学习？</h3>
@@ -13070,7 +13070,7 @@ Laplacian Eigenmaps 是用局部的角度去构建数据之间的关系。具体
   </entry>
   <entry>
     <title>模型选择与评估</title>
-    <url>/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/mode_selection_and_ev/</url>
+    <url>/tree/master/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/mode_selection_and_ev/</url>
     <content><![CDATA[<h1>模型选择与评估</h1>
 <h2 id="损失函数类">损失函数类</h2>
 <h3 id="代价函数，损失函数和目标函数的区别？">代价函数，损失函数和目标函数的区别？</h3>
@@ -13832,7 +13832,7 @@ $$
   </entry>
   <entry>
     <title>机器学习理论</title>
-    <url>/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/</url>
+    <url>/tree/master/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/</url>
     <content><![CDATA[<h1>机器学习理论</h1>
 <h2 id="数学知识">数学知识</h2>
 <h3 id="机器学习中的距离和相似度度量方式有哪些？">机器学习中的距离和相似度度量方式有哪些？</h3>
@@ -14207,7 +14207,7 @@ extreme multi-label learning with label features for warm-start tagging, ranking
   </entry>
   <entry>
     <title>树模型</title>
-    <url>/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/tree_model/</url>
+    <url>/tree/master/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/tree_model/</url>
     <content><![CDATA[<h1>树模型</h1>
 <h2 id="基础树">基础树</h2>
 <h3 id="介绍下ID3和C4-5">介绍下ID3和C4.5?</h3>
