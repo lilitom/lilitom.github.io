@@ -17,44 +17,44 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lilitom.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="经典网络解读 4.1 LeNet-5 4.1.1 模型介绍 ​	LeNet-5是由 $LeCun$  提出的一种用于识别手写数字和机器印刷字符的卷积神经网络（Convolutional Neural Network，CNN） $^{[1]}$ ，其命名来源于作者 $LeCun$ 的名字，5则是其研究成果的代号，在LeNet-5之前还有LeNet-4和LeNet-1鲜为人知。LeNet-5阐述了图像">
 <meta property="og:type" content="article">
 <meta property="og:title" content="经典网络面试题">
-<meta property="og:url" content="http://example.com/2024/03/19/deep_learning/ch4/index.html">
+<meta property="og:url" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/index.html">
 <meta property="og:site_name" content="算法工程师的日常">
 <meta property="og:description" content="经典网络解读 4.1 LeNet-5 4.1.1 模型介绍 ​	LeNet-5是由 $LeCun$  提出的一种用于识别手写数字和机器印刷字符的卷积神经网络（Convolutional Neural Network，CNN） $^{[1]}$ ，其命名来源于作者 $LeCun$ 的名字，5则是其研究成果的代号，在LeNet-5之前还有LeNet-4和LeNet-1鲜为人知。LeNet-5阐述了图像">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image1.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/featureMap.jpg">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/alexnet.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image21.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image21.jpeg">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/zfnet-layer1.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/zfnet-layer2.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image23.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/vgg16.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/img_inception_01.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image25.jpeg">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image27.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image28.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image34.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image36.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image38.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image37.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image46.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image47.png">
-<meta property="og:image" content="http://example.com/2024/03/19/deep_learning/ch4/image63.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image1.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/featureMap.jpg">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/alexnet.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image21.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image21.jpeg">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/zfnet-layer1.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/zfnet-layer2.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image23.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/vgg16.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/img_inception_01.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image25.jpeg">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image27.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image28.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image34.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image36.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image38.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image37.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image46.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image47.png">
+<meta property="og:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image63.png">
 <meta property="article:published_time" content="2024-03-19T15:29:20.000Z">
 <meta property="article:modified_time" content="2024-03-24T02:13:46.152Z">
 <meta property="article:author" content="Tom">
 <meta property="article:tag" content="刷八股">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/03/19/deep_learning/ch4/image1.png">
+<meta name="twitter:image" content="https://lilitom.github.io/2024/03/19/deep_learning/ch4/image1.png">
 
-<link rel="canonical" href="http://example.com/2024/03/19/deep_learning/ch4/">
+<link rel="canonical" href="https://lilitom.github.io/2024/03/19/deep_learning/ch4/">
 
 
 <script id="page-configurations">
@@ -232,7 +232,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/19/deep_learning/ch4/">
+    <link itemprop="mainEntityOfPage" href="https://lilitom.github.io/2024/03/19/deep_learning/ch4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
