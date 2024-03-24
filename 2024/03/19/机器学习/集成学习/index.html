@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="集成学习方法baggingbagging和boosting区别Bagging：即自助法，无放回的采样，学习到多个基模型，然后进行融合。Boosting是一族可以将弱分类器提升为强分类器的算法，首先基于初始数据集训练基模型，然后再根据基学习期的表现对样本分布进行调整，使得错误的样本得到较大的关注，基于调整后的数据训练模型，训练得到多个模型，然后将模型的结果加权即可。  区别如下：Bagging和Bo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集成学习">
+<meta property="og:url" content="http://example.com/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="算法工程师的日常">
+<meta property="og:description" content="集成学习方法baggingbagging和boosting区别Bagging：即自助法，无放回的采样，学习到多个基模型，然后进行融合。Boosting是一族可以将弱分类器提升为强分类器的算法，首先基于初始数据集训练基模型，然后再根据基学习期的表现对样本分布进行调整，使得错误的样本得到较大的关注，基于调整后的数据训练模型，训练得到多个模型，然后将模型的结果加权即可。  区别如下：Bagging和Bo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-19T15:29:20.000Z">
+<meta property="article:modified_time" content="2024-03-23T12:48:02.451Z">
+<meta property="article:author" content="Tom">
+<meta property="article:tag" content="刷八股">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>集成学习 | 算法工程师的日常</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">算法工程师的日常</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tom">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="算法工程师的日常">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          集成学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-19 23:29:20" itemprop="dateCreated datePublished" datetime="2024-03-19T23:29:20+08:00">2024-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-23 20:48:02" itemprop="dateModified" datetime="2024-03-23T20:48:02+08:00">2024-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">算法面试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="far fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="集成学习方法"><a href="#集成学习方法" class="headerlink" title="集成学习方法"></a>集成学习方法</h1><h2 id="bagging"><a href="#bagging" class="headerlink" title="bagging"></a>bagging</h2><h3 id="bagging和boosting区别"><a href="#bagging和boosting区别" class="headerlink" title="bagging和boosting区别"></a>bagging和boosting区别</h3><p>Bagging：即自助法，无放回的采样，学习到多个基模型，然后进行融合。<br>Boosting是一族可以将弱分类器提升为强分类器的算法，首先基于初始数据集训练基模型，然后再根据基学习期的表现对样本分布进行调整，使得错误的样本得到较大的关注，基于调整后的数据训练模型，训练得到多个模型，然后将模型的结果加权即可。 </p>
+<p>区别如下：<br>Bagging和Boosting的区别：<br>1）样本选择上<br>Bagging：训练集是在原始集中有放回选取的，从原始集中选出的各轮训练集之间是独立的。<br>Boosting：每一轮的训练集不变，只是训练集中每个样例在分类器中的权重发生变化。而权值是根据上一轮的分类结果进行调整。<br>2）样例权重<br>Bagging：使用均匀取样，每个样例的权重相等Boosting：根据错误率不断调整样例的权值，错误率越大则权重越大。<br>3）预测函数<br>Bagging：所有预测函数的权重相等。Boosting：每个弱分类器都有相应的权重，对于分类误差小的分类器会有更大的权重。<br>4）并行计算<br>Bagging：各个预测函数可以并行生成Boosting：各个预测函数只能顺序生成，因为后一个模型参数需要前一轮模型的结果。  </p>
+<p>详细见：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/81340270">https://zhuanlan.zhihu.com/p/81340270</a></p>
+<h3 id="为啥adboost不容易过拟合？"><a href="#为啥adboost不容易过拟合？" class="headerlink" title="为啥adboost不容易过拟合？"></a>为啥adboost不容易过拟合？</h3><p>在解决这个问题之前，我们需要先了解一下隐马科夫模型Adboost的定义是什么？Adaboost算法是一种提升方法，将多个弱分类器，组合成强分类器。AdaBoost，是英文”Adaptive Boosting“（自适应增强）的缩写，由Yoav Freund和Robert Schapire在1995年提出。它的自适应在于：前一个弱分类器分错的样本的权值（样本对应的权值）会得到加强，权值更新后的样本再次被用来训练下一个新的弱分类器。在每轮训练中，用总体（样本总体）训练新的弱分类器，产生新的样本权值、该弱分类器的话语权，一直迭代直到达到预定的错误率或达到指定的最大迭代次数。</p>
+<p>对于过拟合问题，如今找到的能解释只有Margin理论能解释的还不错，这个理论是从泛化错误 &lt; 训练Margin项 + 学习算法容量相关项到泛化错误 &lt; 训练Margin项最小值 + 学习算法容量相关项进行发展，国内的一些学者 周志华 王立威 等也做了相关的研究。Margin理论讨论的主要是学习算法在训练样本上的信心.通过其他一些在variance-bias 分解实验中也观察到，AdaBoost不仅是减少了bias，同时也减少了variance，variance的减少往往与算法容量减少有关。有兴趣的小伙伴可以看一下参考文献。</p>
+<p><a target="_blank" rel="noopener" href="https://jeremykun.com/2015/09/21/the-boosting-margin-or-why-boosting-doesnt-overfit/">https://jeremykun.com/2015/09/21/the-boosting-margin-or-why-boosting-doesnt-overfit/</a></p>
+<h3 id="为什么随机森林的泛化能力较强？"><a href="#为什么随机森林的泛化能力较强？" class="headerlink" title="为什么随机森林的泛化能力较强？"></a>为什么随机森林的泛化能力较强？</h3><p>随机森林的泛化误差界与单个决策树的分类强度<code>$s$</code>成负相关，与决策树之间的相关性<code>$\rho$</code>成正相关，分类强度<code>$\rho$</code>越大且相关性<code>$s$</code>越小，泛化误差界越小，可以看到随机森林中的随机性可以保证<code>$\rho$</code>越小，如果每棵树的越大的话，泛化误差会收敛到一个small界，这个界当然越小越好，就是泛化误差越小。</p>
+<h3 id="解释下stacking技术？"><a href="#解释下stacking技术？" class="headerlink" title="解释下stacking技术？"></a>解释下stacking技术？</h3><p>Stacking是通过一个元分类器或者元回归器来整合多个分类模型或回归模型的集成学习技术。基础模型利用整个训练集做训练，元模型将基础模型的特征作为特征进行训练。</p>
+<h3 id="为什么bagging减少方差"><a href="#为什么bagging减少方差" class="headerlink" title="为什么bagging减少方差"></a>为什么bagging减少方差</h3><p>当融合多棵树的结果的时候，最后的方差是<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\rho \sigma^2 +(1-\rho)\frac&#123;\sigma^2&#125;&#123;B&#125;</span><br></pre></td></tr></table></figure><br>可以看到 <code>$\rho$</code>越小，<code>$B$</code>越大，方差越小<br>详细可以看<br><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/questions/380023/how-can-we-explain-the-fact-that-bagging-reduces-the-variance-while-retaining-t">https://stats.stackexchange.com/questions/380023/how-can-we-explain-the-fact-that-bagging-reduces-the-variance-while-retaining-t</a><br>推导在<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/373404605">https://zhuanlan.zhihu.com/p/373404605</a></p>
+<h3 id="什么场景下采用bagging集成方法"><a href="#什么场景下采用bagging集成方法" class="headerlink" title="什么场景下采用bagging集成方法"></a>什么场景下采用bagging集成方法</h3><p>学习算法不稳定：if small changes to the training set cause large changes in the learned classifier.（也就是说如果训练集稍微有所改变就会导致分类器性能比较大大变化那么我们可以采用bagging这种集成方法）If the learning algorithm is unstable, then Bagging almost always improves performance.(当学习算法不稳定的时候，Bagging这种方法通常可以改善模型的性能)</p>
+<p>详细见<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/81340270">https://zhuanlan.zhihu.com/p/81340270</a></p>
+<h3 id="bagging和dropout区别"><a href="#bagging和dropout区别" class="headerlink" title="bagging和dropout区别"></a>bagging和dropout区别</h3><p>dropout训练与bagging训练不太一样，bagging的各个子模型之间是完全独立的，而在dropout里，这些参数是共享的。每个模型集成父神经网络参数的不同子集，参数共享使得在有限可用内存下表示指数级数量的模型变得可能，在bagging的情况下，每一个模型在其训练集上训练到收敛，而在dropout情况下，通常大部分的模型都没有显式的训练，因为父神经网络很大，大到宇宙毁灭都不可能采样完所有的网络，在每一个步骤中，我们训练一小部分网络，参数共享会使得剩余的网络也有好的参数设定。<br>详细见<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/149575988">https://zhuanlan.zhihu.com/p/149575988</a></p>
+<h3 id="bagging和boosting的区别"><a href="#bagging和boosting的区别" class="headerlink" title="bagging和boosting的区别"></a>bagging和boosting的区别</h3><p>1）样本选择上：<br>Bagging：训练集是在原始集中有放回选取的，从原始集中选出的各轮训练集之间是独立的.<br>Boosting：每一轮的训练集不变，只是训练集中每个样例在分类器中的权重发生变化.而权值是根据上一轮的分类结果进行调整.<br>2）样例权重：<br>Bagging：使用均匀取样，每个样例的权重相等.<br>Boosting：根据错误率不断调整样例的权值，错误率越大则权重越大.<br><strong>3）预测函数：</strong><br>Bagging：所有预测函数的权重相等.<br>Boosting：每个弱分类器都有相应的权重，对于分类误差小的分类器会有更大的权重.<br>4）并行计算：<br>Bagging：各个预测函数可以并行生.<br>Boosting：各个预测函数只能顺序生成，因为后一个模型参数需要前一轮模型的结果.</p>
+<h3 id="为什么说bagging是减少variance，而boosting是减少bias"><a href="#为什么说bagging是减少variance，而boosting是减少bias" class="headerlink" title="为什么说bagging是减少variance，而boosting是减少bias?"></a>为什么说bagging是减少variance，而boosting是减少bias?</h3><p>boosting是把许多弱的分类器组合成一个强的分类器。弱的分类器bias高，而强的分类器bias低，所以说boosting起到了降低bias的作用。variance不是boosting的主要考虑因素。bagging是对许多强（甚至过强）的分类器求平均。在这里，每个单独的分类器的bias都是低的，平均之后bias依然低；而每个单独的分类器都强到可能产生overfitting的程度，也就是variance高，求平均的操作起到的作用就是降低这个variance。</p>
+<h3 id="请从偏差和方差的角度解释bagging和boosting的原理"><a href="#请从偏差和方差的角度解释bagging和boosting的原理" class="headerlink" title="请从偏差和方差的角度解释bagging和boosting的原理"></a>请从偏差和方差的角度解释bagging和boosting的原理</h3><p>偏差指的是算法的期望预测与真实值之间的偏差程度，反映了模型本身的拟合能力；方差度量了同等大小的训练集的变动导致学习性能的变化，刻画了数据扰动所导致的影响。</p>
+<p>Bagging对样本重采样，对每一重采样得到的子样本集训练一个模型，最后取平均。由于子样本集的相似性以及使用的是同种模型，因此各模型有近似相等的bias和variance。由于<code>$E[\frac{{\sum {{X_i}} }}{n}] = E[{X_i}]$</code>，所以bagging后的bias和单个子模型的接近，一般来说不能显著降低bias。另一方面，若各子模型独立，则有<code>$Var[\frac{{\sum {{X_i}} }}{n}] = \frac{{Var[{X_i}]}}{n}$</code>，此时可以显著降低variance。若各子模型完全相同，则<code>$Var[\frac{{\sum {{X_i}} }}{n}] = Var[{X_i}]$</code>，此时不会降低variance。</p>
+<p>bagging方法得到的各子模型是有一定相关性的，属于上面两个极端状况的中间态，因此可以一定程度降低variance。</p>
+<p>boosting从优化角度来看，是用forward-stagewise这种贪心法去最小化损失函数,由于采取的是串行优化的策略，各子模型之间是强相关的，于是子模型之和并不能显著降低variance。所以说boosting主要还是靠降低bias来提升预测精度。</p>
+<h3 id="详细说明下决策数如何计算特征重要性的？"><a href="#详细说明下决策数如何计算特征重要性的？" class="headerlink" title="详细说明下决策数如何计算特征重要性的？"></a>详细说明下决策数如何计算特征重要性的？</h3><p>对于简单的的决策数，sklearn中是使用基尼指数来计算的，也就是基尼不纯度，决策数首先要构造好后才可以计算特征重要性，当然，我们在构建数的过程中已近计算好了特征重要性的一些值，如基尼指数，最后我们得到特征重要性的话，就直接将基尼指数做些操作就可以了。在sklearn中，feature_importances_应当就是这个Gini importance，也是就<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">N_t / N * (impurity - N_t_R / N_t * right_impurity</span><br><span class="line">                    - N_t_L / N_t * left_impurity)</span><br></pre></td></tr></table></figure></p>
+<h3 id="softmax的这个小细节问题吗"><a href="#softmax的这个小细节问题吗" class="headerlink" title="softmax的这个小细节问题吗?"></a>softmax的这个小细节问题吗?</h3><p>在我们的softmax计算过程中会遇到上溢下溢的问题，这点我们可以从softmax的函数中看到。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(x) = \frac&#123;&#123;\exp (x)&#125;&#125;&#123;&#123;\sum\limits_&#123;i = 1&#125;^k &#123;\exp (x)&#125; &#125;&#125;</span><br></pre></td></tr></table></figure><br>可以看到我们的分子和分母都是指数函数，当<code>$x$</code>取值过大时会导致数据溢出，当<code>$x$</code>都很小的时候，分母为0，举个例子，当x=[10000,5000,2000]的时候，超过了计算机所能存储的最大范围，就会发生溢出。当x=[-10000,-1000,-34343]的时候，分母很小很小，基本为0，导致计算结果为nan.</p>
+<p>那如何解决呢，只要将x进行变换就可以,将原数组变成x-max(x)。对于x=[10000,5000,2000]，则变成x=[0,-5000,-8000]，这样分母最少为1，分子不用说没问题也不会溢出。为啥减去一个max(x)就可以呢，我们看如下的公式：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\frac&#123;&#123;\exp (x - a)&#125;&#125;&#123;&#123;\sum\limits_&#123;i = 1&#125;^k &#123;\exp (x - a)&#125; &#125;&#125; = \frac&#123;&#123;\exp (x)\exp ( - a)&#125;&#125;&#123;&#123;\exp ( - a)\sum\limits_&#123;i = 1&#125;^k &#123;\exp (x)&#125; &#125;&#125;</span><br></pre></td></tr></table></figure><br>这样就可以啦。</p>
+<h3 id="adaboost为什么不容易过拟合？"><a href="#adaboost为什么不容易过拟合？" class="headerlink" title="adaboost为什么不容易过拟合？"></a>adaboost为什么不容易过拟合？</h3><p>这里需要用到一个理论来说一下。<br>Margin理论讨论的主要是学习算法在训练样本上的信心，学习算法的容量是不是随着训练轮数的增加而增加呢，其实并不一定，近来有工作表明，有差异的学习器的组合，能够起到正则化的作用，也就是减少学习算法容量（Diversity regularized ensemble pruning. ECML’12; On the Generalization Error Bounds of Neural Networks under Diversity-Inducing Mutual Angular Regularization）。在许多variance-bias 分解实验中也观察到，AdaBoost不仅是减少了bias，同时也减少了variance，variance的减少往往与算法容量减少有关。</p>
+<p>详细见<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41047671/answer/127832345">https://www.zhihu.com/question/41047671/answer/127832345</a></p>
+<h3 id="Random-Forest可以用来做聚类？"><a href="#Random-Forest可以用来做聚类？" class="headerlink" title="Random Forest可以用来做聚类？"></a>Random Forest可以用来做聚类？</h3><p>其实随机森林是可以用来做聚类的，对于没有标签的特征，随机森林通过生成数据来实现聚类。其主要的步骤如下：</p>
+<p>第一步：生成假冒数据和临时标签。</p>
+<p>我们先给原数据集增加一列，名叫“标签”，原生数据每一行的标签都是“1”。下面生成一些假数据，假数据的每一列都是从原生数据中根据其经验分布随机产生的，人工合成的数据的标签是“0”。举个例子，</p>
+<p>标签 身高 体重 年龄</p>
+<p>1 184 158 25</p>
+<p>1 170 162 37</p>
+<p>1 165 132 45</p>
+<p>1 110 78 9</p>
+<p>1 145 100 14</p>
+<p>1 … … …</p>
+<p>上面是原生数据，下面我们开始制造虚假数据</p>
+<p>标签 身高 体重 年龄</p>
+<p>1 184 158 25</p>
+<p>1 170 162 37</p>
+<p>1 165 132 45</p>
+<p>1 110 78 9</p>
+<p>1 145 100 14</p>
+<p>1 … … …</p>
+<p>0 170 100 9</p>
+<p>0 110 162 37</p>
+<p>0 165 158 14</p>
+<p>每行假数据的每一个元素都是从它所在的那一列中随机抽取的，列和列之间的抽取是独立的。这样一来，人工合成的假数据就破坏了原有数据的结构性。现在我们的数据集和标签就生成完了。</p>
+<p>第二步：用该数据集训练Random Forest并获得样本间的临近性(proximity)。</p>
+<p>假设原生样本有N行，我们再生成M个假数据。现在我们就有了带标签的样本之后就可以用它训练出一个Random Forest。Random Forest在训练的同时，可以返回样本之间的临近性(proximity，两个样本出现在树杈同一节点的频率越高，它们就越临近)。我们就有了一个(N+M)x(N+M)的临近矩阵（这是个对称矩阵）。把与假数据相关的M行、M列去掉，我们就得到了NxN的矩阵，矩阵的第i行第j列的数值就是原生数据中第i个样本和第j个样本之间的临近性。</p>
+<p>第三步：根据每个样本点两两之间的临近性来聚类。</p>
+<p>这个是最后一步，在其中可以用两两之间的临近性当做两两之间的距离，然后再利用常规的聚类算法，比如层次聚类法(Hierarchical clustering)，就可以完成对原样本的聚类。</p>
+<h3 id="组合弱学习器的算法？"><a href="#组合弱学习器的算法？" class="headerlink" title="组合弱学习器的算法？"></a>组合弱学习器的算法？</h3><p>为了建立一个集成学习方法，我们首先要选择待聚合的基础模型。在大多数情况下（包括在众所周知的 bagging 和 boosting 方法中），我们会使用单一的基础学习算法，这样一来我们就有了以不同方式训练的同质弱学习器。这样得到的集成模型被称为「同质的」。然而，也有一些方法使用不同种类的基础学习算法：将一些异质的弱学习器组合成「异质集成模型」。很重要的一点是：我们对弱学习器的选择应该和我们聚合这些模型的方式相一致。如果我们选择具有低偏置高方差的基础模型，我们应该使用一种倾向于减小方差的聚合方法；而如果我们选择具有低方差高偏置的基础模型，我们应该使用一种倾向于减小偏置的聚合方法。</p>
+<p>bagging，该方法通常考虑的是同质弱学习器，相互独立地并行学习这些弱学习器，并按照某种确定性的平均过程将它们组合起来。boosting，该方法通常考虑的也是同质弱学习器。它以一种高度自适应的方法顺序地学习这些弱学习器（每个基础模型都依赖于前面的模型），并按照某种确定性的策略将它们组合起来。stacking，该方法通常考虑的是异质弱学习器，并行地学习它们，并通过训练一个「元模型」将它们组合起来，根据不同弱模型的预测结果输出一个最终的预测结果。</p>
+<p>详细见<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/6588817">https://zhuanlan.zhihu.com/p/6588817</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%88%B7%E5%85%AB%E8%82%A1/" rel="tag"># 刷八股</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%9D%9E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/" rel="prev" title="非监督学习">
+      <i class="fa fa-chevron-left"></i> 非监督学习
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%E4%B8%8E%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95/" rel="next" title="线性模型与经典算法">
+      线性模型与经典算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">集成学习方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bagging"><span class="nav-number">1.1.</span> <span class="nav-text">bagging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bagging%E5%92%8Cboosting%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.1.</span> <span class="nav-text">bagging和boosting区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%95%A5adboost%E4%B8%8D%E5%AE%B9%E6%98%93%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F"><span class="nav-number">1.1.2.</span> <span class="nav-text">为啥adboost不容易过拟合？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E7%9A%84%E6%B3%9B%E5%8C%96%E8%83%BD%E5%8A%9B%E8%BE%83%E5%BC%BA%EF%BC%9F"><span class="nav-number">1.1.3.</span> <span class="nav-text">为什么随机森林的泛化能力较强？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E4%B8%8Bstacking%E6%8A%80%E6%9C%AF%EF%BC%9F"><span class="nav-number">1.1.4.</span> <span class="nav-text">解释下stacking技术？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88bagging%E5%87%8F%E5%B0%91%E6%96%B9%E5%B7%AE"><span class="nav-number">1.1.5.</span> <span class="nav-text">为什么bagging减少方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%E4%B8%8B%E9%87%87%E7%94%A8bagging%E9%9B%86%E6%88%90%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.6.</span> <span class="nav-text">什么场景下采用bagging集成方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bagging%E5%92%8Cdropout%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.7.</span> <span class="nav-text">bagging和dropout区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bagging%E5%92%8Cboosting%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.8.</span> <span class="nav-text">bagging和boosting的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4bagging%E6%98%AF%E5%87%8F%E5%B0%91variance%EF%BC%8C%E8%80%8Cboosting%E6%98%AF%E5%87%8F%E5%B0%91bias"><span class="nav-number">1.1.9.</span> <span class="nav-text">为什么说bagging是减少variance，而boosting是减少bias?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E4%BB%8E%E5%81%8F%E5%B7%AE%E5%92%8C%E6%96%B9%E5%B7%AE%E7%9A%84%E8%A7%92%E5%BA%A6%E8%A7%A3%E9%87%8Abagging%E5%92%8Cboosting%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.10.</span> <span class="nav-text">请从偏差和方差的角度解释bagging和boosting的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E%E4%B8%8B%E5%86%B3%E7%AD%96%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E7%89%B9%E5%BE%81%E9%87%8D%E8%A6%81%E6%80%A7%E7%9A%84%EF%BC%9F"><span class="nav-number">1.1.11.</span> <span class="nav-text">详细说明下决策数如何计算特征重要性的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#softmax%E7%9A%84%E8%BF%99%E4%B8%AA%E5%B0%8F%E7%BB%86%E8%8A%82%E9%97%AE%E9%A2%98%E5%90%97"><span class="nav-number">1.1.12.</span> <span class="nav-text">softmax的这个小细节问题吗?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adaboost%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%AE%B9%E6%98%93%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F"><span class="nav-number">1.1.13.</span> <span class="nav-text">adaboost为什么不容易过拟合？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-Forest%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E5%81%9A%E8%81%9A%E7%B1%BB%EF%BC%9F"><span class="nav-number">1.1.14.</span> <span class="nav-text">Random Forest可以用来做聚类？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%BC%B1%E5%AD%A6%E4%B9%A0%E5%99%A8%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9F"><span class="nav-number">1.1.15.</span> <span class="nav-text">组合弱学习器的算法？</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tom</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tom</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

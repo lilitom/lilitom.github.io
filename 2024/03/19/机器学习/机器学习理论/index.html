@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="机器学习理论数学知识机器学习中的距离和相似度度量方式有哪些？ 欧氏距离 曼哈顿距离 切比雪夫距离 闵可夫斯基距离 标准化欧氏距离 马氏距离 夹角余弦 汉明距离这里无法给出具体的公式，定义是两个等长字符串s1与s2之间的汉明距离定义为将其中一个变为另外一个所需要作的最小替换次数。例如字符串“1111”与“1001”之间的汉明距离为2 杰卡德距离 &amp; 杰卡德相似系数 相关系数 &amp; 相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习理论">
+<meta property="og:url" content="http://example.com/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/index.html">
+<meta property="og:site_name" content="算法工程师的日常">
+<meta property="og:description" content="机器学习理论数学知识机器学习中的距离和相似度度量方式有哪些？ 欧氏距离 曼哈顿距离 切比雪夫距离 闵可夫斯基距离 标准化欧氏距离 马氏距离 夹角余弦 汉明距离这里无法给出具体的公式，定义是两个等长字符串s1与s2之间的汉明距离定义为将其中一个变为另外一个所需要作的最小替换次数。例如字符串“1111”与“1001”之间的汉明距离为2 杰卡德距离 &amp; 杰卡德相似系数 相关系数 &amp; 相关">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/56baf6bc2d9c4ccca51e454373162b97.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1e5fd6d5b70c423292ef603088b05908.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/82bec7295ab342abbb690513901431c5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/58bcff710aec4120920b4d156267e653.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9c7f06b6c6b04381916796a03570cfb5.png">
+<meta property="article:published_time" content="2024-03-19T15:29:20.000Z">
+<meta property="article:modified_time" content="2024-03-21T15:17:17.117Z">
+<meta property="article:author" content="Tom">
+<meta property="article:tag" content="刷八股">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/56baf6bc2d9c4ccca51e454373162b97.png">
+
+<link rel="canonical" href="http://example.com/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>机器学习理论 | 算法工程师的日常</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">算法工程师的日常</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tom">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="算法工程师的日常">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习理论
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-19 23:29:20" itemprop="dateCreated datePublished" datetime="2024-03-19T23:29:20+08:00">2024-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-21 23:17:17" itemprop="dateModified" datetime="2024-03-21T23:17:17+08:00">2024-03-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">算法面试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="far fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="机器学习理论"><a href="#机器学习理论" class="headerlink" title="机器学习理论"></a>机器学习理论</h1><h2 id="数学知识"><a href="#数学知识" class="headerlink" title="数学知识"></a>数学知识</h2><h3 id="机器学习中的距离和相似度度量方式有哪些？"><a href="#机器学习中的距离和相似度度量方式有哪些？" class="headerlink" title="机器学习中的距离和相似度度量方式有哪些？"></a>机器学习中的距离和相似度度量方式有哪些？</h3><ul>
+<li>欧氏距离</li>
+<li>曼哈顿距离</li>
+<li>切比雪夫距离</li>
+<li>闵可夫斯基距离</li>
+<li>标准化欧氏距离</li>
+<li>马氏距离</li>
+<li>夹角余弦</li>
+<li>汉明距离<br>这里无法给出具体的公式，定义是两个等长字符串s1与s2之间的汉明距离定义为将其中一个变为另外一个所需要作的最小替换次数。例如字符串“1111”与“1001”之间的汉明距离为2</li>
+<li>杰卡德距离 &amp; 杰卡德相似系数</li>
+<li>相关系数 &amp; 相关距离</li>
+</ul>
+<h3 id="马氏距离比欧式距离的异同点？"><a href="#马氏距离比欧式距离的异同点？" class="headerlink" title="马氏距离比欧式距离的异同点？"></a>马氏距离比欧式距离的异同点？</h3><p>马氏距离（Mahalanobis Distance）是由印度统计学家马哈拉诺比斯（P. C. Mahalanobis）提出的，表示数据的协方差距离。它是一种有效的计算两个未知样本集的相似度的方法。与欧氏距离不同的是它考虑到各种特性之间的联系（例如：一条关于身高的信息会带来一条关于体重的信息，因为两者是有关联的）并且是尺度无关的（scale-invariant），即独立于测量尺度。</p>
+<p>马氏距离有很多优点，马氏距离不受量纲的影响，两点之间的马氏距离与原始数据的测量单位无关；由标准化数据和中心化数据(即原始数据与均值之差）计算出的二点之间的马氏距离相同。马氏距离还可以排除变量之间的相关性的干扰。它的缺点是夸大了变化微小的变量的作用。</p>
+<h3 id="张量与矩阵的区别？"><a href="#张量与矩阵的区别？" class="headerlink" title="张量与矩阵的区别？"></a>张量与矩阵的区别？</h3><ul>
+<li>从代数角度讲， 矩阵它是向量的推广。向量可以看成一维的“表格”（即分量按照顺序排成一排）， 矩阵是二维的“表格”（分量按照纵横位置排列）， 那么阶张量就是所谓的维的“表格”。张量的严格定义是利用线性映射来描述。</li>
+<li>从几何角度讲， 矩阵是一个真正的几何量，也就是说，它是一个不随参照系的坐标变换而变化的东西。向量也具有这种特性。</li>
+</ul>
+<h3 id="如何判断矩阵为正定？"><a href="#如何判断矩阵为正定？" class="headerlink" title="如何判断矩阵为正定？"></a>如何判断矩阵为正定？</h3><p>判定一个矩阵是否为正定，通常有以下几个方面：</p>
+<ul>
+<li>顺序主子式全大于0；</li>
+<li>存在可逆矩阵$C$使得$C^TC$等于该矩阵；</li>
+<li>正惯性指数等于n；</li>
+<li>合同于单位矩阵$E$（即：规范形为$E$）</li>
+<li>标准形中主对角元素全为正；</li>
+<li>特征值全为正；</li>
+<li>是某基的度量矩阵。</li>
+</ul>
+<h3 id="距离的严格定义？"><a href="#距离的严格定义？" class="headerlink" title="距离的严格定义？"></a>距离的严格定义？</h3><p>距离的定义：在一个集合中，如果每一对元素均可唯一确定一个实数，使得三条距离公理（正定性，对称性，三角不等式）成立，则该实数可称为这对元素之间的距离。</p>
+<p>在机器学习领域，被俗称为距离，却不满足三条距离公理的不仅仅有余弦距离，还有 KL 距离，也叫作相对熵，它常用于计算两个分布之间的差异，但不满足对称性和三角不等式。<br>来自</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85408804">https://zhuanlan.zhihu.com/p/85408804</a><br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27057384/answer/2182368961">https://www.zhihu.com/question/27057384/answer/2182368961</a></p>
+</blockquote>
+<h2 id="概率论"><a href="#概率论" class="headerlink" title="概率论"></a>概率论</h2><h3 id="什么是概率？"><a href="#什么是概率？" class="headerlink" title="什么是概率？"></a>什么是概率？</h3><p>“概率，亦称“或然率”，它是反映随机事件出现的可能性大小。</p>
+<h3 id="概率和频率的区别？"><a href="#概率和频率的区别？" class="headerlink" title="概率和频率的区别？"></a>概率和频率的区别？</h3><p>概率是一个稳定的数值，也就是某件事发生或不发生的概率是多少。频率是在一定数量的某件事情上面，发生的数与总数的比值。频率是有限次数的试验所得的结果，概率是频数无限大时对应的频率。</p>
+<h3 id="泊松分布与二项分布的关系？"><a href="#泊松分布与二项分布的关系？" class="headerlink" title="泊松分布与二项分布的关系？"></a>泊松分布与二项分布的关系？</h3><p>泊松分布可看成是二项分布的极限而得到，当$\lambda = np$时，两者是相同的。</p>
+<h3 id="常见分布的期望和方差是什么？"><a href="#常见分布的期望和方差是什么？" class="headerlink" title="常见分布的期望和方差是什么？"></a>常见分布的期望和方差是什么？</h3><center>
+<img src="https://img-blog.csdnimg.cn/56baf6bc2d9c4ccca51e454373162b97.png" width="90%">  
+</center>
+
+<h3 id="什么是大数定理？"><a href="#什么是大数定理？" class="headerlink" title="什么是大数定理？"></a>什么是大数定理？</h3><p>大数定理简单来说，指得是某个随机事件在单次试验中可能发生也可能不发生，但在大量重复实验中往往呈现出明显的规律性，即该随机事件发生的频率会向某个常数值收敛，该常数值即为该事件发生的概率。</p>
+<p>另一种表达方式为当样本数据无限大时，样本均值趋于总体均值。</p>
+<p>因为现实生活中，我们无法进行无穷多次试验，也很难估计出总体的参数。</p>
+<p>大数定律告诉我们能用频率近似代替概率；能用样本均值近似代替总体均值。</p>
+<h3 id="什么是中心极限定理？"><a href="#什么是中心极限定理？" class="headerlink" title="什么是中心极限定理？"></a>什么是中心极限定理？</h3><p>中心极限定理是概率论中的一组重要定理，它的中心思想是无论是什么分布的数据，当我们从中抽取相互独立的随机样本，且采集的样本足够多时，样本均值的分布将收敛于正态分布。</p>
+<h3 id="求最大似然估计量的一般步骤？"><a href="#求最大似然估计量的一般步骤？" class="headerlink" title="求最大似然估计量的一般步骤？"></a>求最大似然估计量的一般步骤？</h3><ol>
+<li>写出似然函数</li>
+<li>对似然函数取对数，并整理</li>
+<li>求导数</li>
+<li>解似然方程</li>
+</ol>
+<h3 id="什么是无偏性？"><a href="#什么是无偏性？" class="headerlink" title="什么是无偏性？"></a>什么是无偏性？</h3><p>无偏性（Unbiasedness）是指单凭某一次抽样的样本是不具有说服力的，必须要通过很多次抽样的样本来衡量。因此，我们容易能想到的就是，经过多次抽样后，将所有的点估计值平均起来，也就是取期望值，这个期望值应该和总体参数一样。这就是所谓的无偏性（Unbiasedness）。</p>
+<h3 id="说一下条件概率、全概率和贝叶斯公式？"><a href="#说一下条件概率、全概率和贝叶斯公式？" class="headerlink" title="说一下条件概率、全概率和贝叶斯公式？"></a>说一下条件概率、全概率和贝叶斯公式？</h3><ul>
+<li>条件概率/分布律（乘法公式）</li>
+</ul>
+<p>P(A|B)=P(AB)/P(B)，演化式P(A|B)<em>P(B)=P(B|A)</em>P(A)</p>
+<ul>
+<li>全概率公式</li>
+</ul>
+<p>P(A)= P(A|B1)+P(A|B2)+P(A|B3)+…+P(A|Bn)，其中A为样本空间的事件，B1、B2、B3…Bn为样本空间的一个划分。</p>
+<ul>
+<li>贝叶斯公式</li>
+</ul>
+<p>P(Bi|A)= P(A|Bi)*P(Bi)/[P(A|B1)+P(A|B2)+P(A|B3)+…+P(A|Bn)]，其中A为样本空间的事件，B1、B2、B3…Bn为样本空间的一个划分。</p>
+<h3 id="一句话解释极大似然估计法和概率的区别"><a href="#一句话解释极大似然估计法和概率的区别" class="headerlink" title="一句话解释极大似然估计法和概率的区别?"></a>一句话解释极大似然估计法和概率的区别?</h3><p>概率是已知分布和参数，求事件结果出现的次数；极大似然估计是已知分布和事件结果出现的次数，估计事件结果以最大概率的出现情况下的参数。</p>
+<h3 id="极大似然估计，最大后验估计的区别？"><a href="#极大似然估计，最大后验估计的区别？" class="headerlink" title="极大似然估计，最大后验估计的区别？"></a>极大似然估计，最大后验估计的区别？</h3><p>当先验概率是分布均匀的情况下，则相当于没有给参数提供任何有用的信息，例如每种情况都是等概率的事件，那此时的极大似然估计就等于最大后验估计。</p>
+<p>因此，可以把极大似然估计看成一种特殊的先验概率为均匀分布的最大后验估计，</p>
+<p>也可以把最大后验估计估计看成是必须考虑先验概率的极大似然估计（即最大后验估计是规则化的)极大似然估计）</p>
+<h3 id="协方差为0，一定独立吗？"><a href="#协方差为0，一定独立吗？" class="headerlink" title="协方差为0，一定独立吗？"></a>协方差为0，一定独立吗？</h3><p>因为协方差等于零只能推出不相关的，所以不能推出互相独立的。但互相独立的可以推出互不相干的。比如X=cosa, Y=sina, 则X和Y的协方差为0, 但是X,Y两者不独立.</p>
+<p>协方差的算法：COV(X,Y)=E{(X-E(X))(Y=E(Y))}E为数学期望；它反映随机变量平均取值的大小。又称期望或均值。它是简单算术平均的一种推广。</p>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87299555">https://zhuanlan.zhihu.com/p/87299555</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/427883809">https://zhuanlan.zhihu.com/p/427883809</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41897154/article/details/109125820">https://blog.csdn.net/qq_41897154/article/details/109125820</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37382341/article/details/80049976">https://blog.csdn.net/m0_37382341/article/details/80049976</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/159115973">https://zhuanlan.zhihu.com/p/159115973</a></p>
+</blockquote>
+<h2 id="学习理论"><a href="#学习理论" class="headerlink" title="学习理论"></a>学习理论</h2><h3 id="什么是表示学习？"><a href="#什么是表示学习？" class="headerlink" title="什么是表示学习？"></a>什么是表示学习？</h3><p>在深度学习领域内，表示是指通过模型的参数，采用何种形式、何种方式来表示模型的输入观测样本X。表示学习指学习对观测样本X有效的表示。   </p>
+<h3 id="什么是端到端学习？"><a href="#什么是端到端学习？" class="headerlink" title="什么是端到端学习？"></a>什么是端到端学习？</h3><p>端到端学习（End-to-End Learning），也称端到端训练，是指在学习过程中不进行分模块或分阶段训练，直接优化任务的总体目标．在端到端学习中，一般不需要明确地给出不同模块或阶段的功能，中间过程不需要人为干预</p>
+<h3 id="机器学习的学习方式主要有哪些"><a href="#机器学习的学习方式主要有哪些" class="headerlink" title="机器学习的学习方式主要有哪些?"></a>机器学习的学习方式主要有哪些?</h3><p>监督学习</p>
+<p>非监督式学习</p>
+<p>半监督式学习</p>
+<p>弱监督学习</p>
+<h3 id="如何开展监督学习"><a href="#如何开展监督学习" class="headerlink" title="如何开展监督学习?"></a>如何开展监督学习?</h3><p>步骤1：数据集的创建和分类 。</p>
+<p>步骤2：数据增强（Data Augmentation） </p>
+<p>步骤3：特征工程（Feature Engineering） </p>
+<p>步骤4：构建预测模型和损失 </p>
+<p>步骤5：训练</p>
+<p>步骤6：验证和模型选择</p>
+<p>步骤7：测试及应用</p>
+<h3 id="类别不均衡问题怎么做"><a href="#类别不均衡问题怎么做" class="headerlink" title="类别不均衡问题怎么做?"></a>类别不均衡问题怎么做?</h3><p>防止类别不平衡对学习造成的影响，在构建分类模型之前，需要对分类不平衡性问题进行处理。主要解决方法有：</p>
+<p>1、扩大数据集</p>
+<p>增加包含小类样本数据的数据，更多的数据能得到更多的分布信息。</p>
+<p>2、对大类数据欠采样</p>
+<p>减少大类数据样本个数，使与小样本个数接近。 缺点：欠采样操作时若随机丢弃大类样本，可能会丢失重要信息。 代表算法：EasyEnsemble。其思想是利用集成学习机制，将大类划分为若干个集合供不同的学习器使用。相当于对每个学习器都进行欠采样，但对于全局则不会丢失重要信息。</p>
+<p>3、对小类数据过采样</p>
+<p>过采样：对小类的数据样本进行采样来增加小类的数据样本个数。</p>
+<p>代表算法：SMOTE和ADASYN。</p>
+<p>SMOTE：通过对训练集中的小类数据进行插值来产生额外的小类样本数据。</p>
+<p>新的少数类样本产生的策略：对每个少数类样本a，在a的最近邻中随机选一个样本b，然后在a、b之间的连线上随机选一点作为新合成的少数类样本。 ADASYN：根据学习难度的不同，对不同的少数类别的样本使用加权分布，对于难以学习的少数类的样本，产生更多的综合数据。通过减少类不平衡引入的偏差和将分类决策边界自适应地转移到困难的样本两种手段，改善了数据分布。</p>
+<p>4、使用新评价指标</p>
+<p>如果当前评价指标不适用，则应寻找其他具有说服力的评价指标。比如准确度这个评价指标在类别不均衡的分类任务中并不适用，甚至进行误导。因此在类别不均衡分类任务中，需要使用更有说服力的评价指标来对分类器进行评价。</p>
+<p>5、选择新算法</p>
+<p>不同的算法适用于不同的任务与数据，应该使用不同的算法进行比较。</p>
+<p>6、数据代价加权</p>
+<p>例如当分类任务是识别小类，那么可以对分类器的小类样本数据增加权值，降低大类样本的权值，从而使得分类器将重点集中在小类样本身上。</p>
+<p>7、转化问题思考角度</p>
+<p>例如在分类问题时，把小类的样本作为异常点，将问题转化为异常点检测或变化趋势检测问题。异常点检测即是对那些罕见事件进行识别。变化趋势检测区别于异常点检测在于其通过检测不寻常的变化趋势来识别。</p>
+<p>8、将问题细化分析</p>
+<p>对问题进行分析与挖掘，将问题划分成多个更小的问题，看这些小问题是否更容易解决。</p>
+<h3 id="维度灾难是啥？怎么避免？"><a href="#维度灾难是啥？怎么避免？" class="headerlink" title="维度灾难是啥？怎么避免？"></a>维度灾难是啥？怎么避免？</h3><p>维数灾难(Curse of Dimensionality)：通常是指在涉及到向量的计算的问题中，随着维数的增加，计算量呈指数倍增长的一种现象。维数灾难涉及数字分析、抽样、组合、机器学习、数据挖掘和数据库等诸多领域。在机器学习的建模过程中，通常指的是随着特征数量的增多，计算量会变得很大，如特征得到上亿维的话，在进行计算的时候是算不出来的。如我们熟悉的KNN的问题，如果不是 构建Kd数等可以加快计算，按照暴力的话，计算量是很大的。而且有的时候，维度太大也会导致机器学习性能的下降，并不是特征维度越大越好，模型的性能会随着特征的增加先上升后下降。</p>
+<p>解决维度灾难问题：</p>
+<ol>
+<li>主成分分析法PCA，线性判别法LDA</li>
+<li>奇异值分解简化数据、拉普拉斯特征映射</li>
+<li>Lassio缩减系数法、小波分析法</li>
+</ol>
+<h3 id="生成模型和判别模型的区别"><a href="#生成模型和判别模型的区别" class="headerlink" title="生成模型和判别模型的区别?"></a>生成模型和判别模型的区别?</h3><p>判别模型：由数据直接学习决策函数Y=f(X)或者条件概率分布P(Y|X)作为预测的模型，即判别模型。基本思想是有限样本条件下建立判别函数，不考虑样本的产生模型，直接研究预测模型。典型的判别模型包括k近邻，感知级，决策树，支持向量机等。  </p>
+<p>生成模型：由数据学习联合概率密度分布P(X,Y)，然后求出条件概率分布P(Y|X)作为预测的模型，即生成模型：P(Y|X)= P(X,Y)/ P(X)。基本思想是首先建立样本的联合概率概率密度模型P(X,Y)，然后再得到后验概率P(Y|X)，再利用它进行分类。常见的有NB HMM模型。</p>
+<h2 id="优化理论"><a href="#优化理论" class="headerlink" title="优化理论"></a>优化理论</h2><h3 id="什么是凸优化？"><a href="#什么是凸优化？" class="headerlink" title="什么是凸优化？"></a>什么是凸优化？</h3><p>凸优化问题（OPT，convex optimization problem）指定义在凸集中的凸函数最优化的问题。尽管凸优化的条件比较苛刻，但仍然在机器学习领域有十分广泛的应用。</p>
+<h3 id="凸优化的优势是什么？"><a href="#凸优化的优势是什么？" class="headerlink" title="凸优化的优势是什么？"></a>凸优化的优势是什么？</h3><ol>
+<li>凸优化问题的局部最优解就是全局最优解</li>
+<li>很多非凸问题都可以被等价转化为凸优化问题或者被近似为凸优化问题（例如拉格朗日对偶问题）</li>
+<li>凸优化问题的研究较为成熟，当一个具体被归为一个凸优化问题，基本可以确定该问题是可被求解的</li>
+</ol>
+<h3 id="如何判断函数是否为凸的"><a href="#如何判断函数是否为凸的" class="headerlink" title="如何判断函数是否为凸的?"></a>如何判断函数是否为凸的?</h3><p>熟悉凸函数的定义，即在凸的定义域上取两个点$x,y$ ，其凸组合的值应该小于等于其值的凸组合，对任意$\lambda  \in [0,1]$,有的话$f(\lambda x + (1 - \lambda )y) \le \lambda f(x) + (1 - \lambda )f(y)$,那么它就是凸函数。</p>
+<h3 id="什么是鞍点？"><a href="#什么是鞍点？" class="headerlink" title="什么是鞍点？"></a>什么是鞍点？</h3><p>鞍点（Saddle point）在微分方程中，沿着某一方向是稳定的，另一条方向是不稳定的奇点，叫做鞍点。在泛函中，既不是极大值点也不是极小值点的临界点，叫做鞍点。在矩阵中，一个数在所在行中是最大值，在所在列中是最小值，则被称为鞍点。在物理上要广泛一些，指在一个方向是极大值，另一个方向是极小值的点。从海塞矩阵的角度来说，Hessian矩阵不定的点称为鞍点，它不是函数的极值点。</p>
+<center>
+<img src="https://img-blog.csdnimg.cn/1e5fd6d5b70c423292ef603088b05908.png" width="70%">  
+</center>
+
+<h3 id="解释什么是局部极小值，什么是全局极小值？"><a href="#解释什么是局部极小值，什么是全局极小值？" class="headerlink" title="解释什么是局部极小值，什么是全局极小值？"></a>解释什么是局部极小值，什么是全局极小值？</h3><p>局部极值点：假设是一个$X^<em>$可行解，如果对可行域内所有点$X$都有$f({x^</em>}) \le f(x)$，则称为全局极小值。</p>
+<p>全局极值点。对于可行解$X^<em>$，如果存在其邻域$\delta$，使得该邻域内的所有点即所有满足$||x - x</em>|| \le \delta$的点$x$，都有$f({x^*}) \le f(x)$，则称为局部极小值。</p>
+<h3 id="既然有全局最优，为什么还需要有局部最优呢？"><a href="#既然有全局最优，为什么还需要有局部最优呢？" class="headerlink" title="既然有全局最优，为什么还需要有局部最优呢？"></a>既然有全局最优，为什么还需要有局部最优呢？</h3><p>对于优化问题，尤其是最优化问题，总是希望能找到全局最优的解决策略，但是当问题的复杂度过于⾼，要考虑的因素和处理的信息量过多的时候，我们往往会倾向于接受局部最优解，因为局部最优解的质量不⼀定最差的。尤其是当我们有确定的评判标准标明得出的解释可以接受的话，通常会接受局部最优的结果。这样，从成本、效率等多⽅⾯考虑，才是实际⼯程中会才去的策略。</p>
+<h3 id="机器学习有哪些优化方法？"><a href="#机器学习有哪些优化方法？" class="headerlink" title="机器学习有哪些优化方法？"></a>机器学习有哪些优化方法？</h3><p>机器学习和深度学习中常用的算法包含不局限如下：梯度下降、牛顿法和拟牛顿、动量法momentum、Adagrad、RMSProp、Adadelta、Adam等，无梯度优化算法也有很多，像粒子群优化算法、蚁群算法、遗传算法、模拟退火等群体智能优化算法。<br>几个常见的优化方法的比较如下：<br><img src="https://img-blog.csdnimg.cn/82bec7295ab342abbb690513901431c5.png" alt="img"></p>
+<h3 id="梯度下降法和牛顿法能保证找到函数的极小值点吗，为什么？"><a href="#梯度下降法和牛顿法能保证找到函数的极小值点吗，为什么？" class="headerlink" title="梯度下降法和牛顿法能保证找到函数的极小值点吗，为什么？"></a>梯度下降法和牛顿法能保证找到函数的极小值点吗，为什么？</h3><p>不能，可能收敛到鞍点，不是极值点。</p>
+<h3 id="解释一元函数极值判别法则是什么？"><a href="#解释一元函数极值判别法则是什么？" class="headerlink" title="解释一元函数极值判别法则是什么？"></a>解释一元函数极值判别法则是什么？</h3><p>假设为函数的驻点，可分为以下三种情况。</p>
+<p>情况一：在该点处的二阶导数大于0，则为函数的极小值点；<br>情况二：在该点处的二阶导数小于0，则为极大值点；<br>情况三：在该点处的二阶导数等于0，则情况不定，可能是极值点，也可能不是极值点。</p>
+<h3 id="解释多元函数极值判别法则是什么？"><a href="#解释多元函数极值判别法则是什么？" class="headerlink" title="解释多元函数极值判别法则是什么？"></a>解释多元函数极值判别法则是什么？</h3><p>假设多元函数在点M的梯度为0，即M是函数的驻点。其Hessian矩阵有如下几种情况。</p>
+<p>情况一：Hessian矩阵正定，函数在该点有极小值。<br>情况二：Hessian矩阵负定，函数在该点有极大值。<br>情况三：Hessian矩阵不定，则不是极值点，称为鞍点。</p>
+<p>Hessian矩阵正定类似于一元函数的二阶导数大于0，负定则类似于一元函数的二阶导数小于0。</p>
+<h3 id="什么是对偶问题？"><a href="#什么是对偶问题？" class="headerlink" title="什么是对偶问题？"></a>什么是对偶问题？</h3><p>可以将对偶问题看成是关于原问题松弛问题的优化问题，对偶问题的目标，是以一定方式，找到最贴近原问题的松弛问题。如果将原问题以对偶变量为参数进行松弛，将得到一系列以对偶变量为参数的松弛问题（例如拉格朗日松弛问题，是以拉格朗日乘子为参数，将原问题约束松弛到目标函数后得到的松弛问题）对偶问题则是通过优化对偶变量，找到最逼近原问题的松弛问题（例如拉格朗日对偶问题，是优化拉格朗日乘子，得到最接近原问题的松弛问题，即原问题的下界）</p>
+<h3 id="随机梯度下降法、批量梯度下降法有哪些区别？"><a href="#随机梯度下降法、批量梯度下降法有哪些区别？" class="headerlink" title="随机梯度下降法、批量梯度下降法有哪些区别？"></a>随机梯度下降法、批量梯度下降法有哪些区别？</h3><p>批量梯度下降：<br>(1) 采用所有数据来梯度下降。<br>(2) 批量梯度下降法在样本量很大的时候，训练速度慢。    </p>
+<p>随机梯度下降<br>(1) 随机梯度下降用一个样本来梯度下降。<br>(2) 训练速度很快。<br>(3) 随机梯度下降法仅仅用一个样本决定梯度方向，导致解有可能不是全局最优。<br>(4) 收敛速度来说，随机梯度下降法一次迭代一个样本，导致迭代方向变化很大，不能很快的收敛到局部最优解。  </p>
+<h3 id="各种梯度下降法性能对比？"><a href="#各种梯度下降法性能对比？" class="headerlink" title="各种梯度下降法性能对比？"></a>各种梯度下降法性能对比？</h3><p><img src="https://img-blog.csdnimg.cn/58bcff710aec4120920b4d156267e653.png" alt="img"></p>
+<h3 id="说一下梯度下降法缺点"><a href="#说一下梯度下降法缺点" class="headerlink" title="说一下梯度下降法缺点?"></a>说一下梯度下降法缺点?</h3><ol>
+<li>靠近极小值时收敛速度减慢<br>在极小值点附近的话，梯度比较小了，毕竟那个点的梯度都快为零了，收敛的就慢了</li>
+<li>直线搜索时可能会产生一些问题<br>步子大或者小会导致来回的震荡，导致不太好收敛</li>
+<li>可能会“之字形”地下降<br>如下所示，梯度下降会来回走之字，导致优化速度慢</li>
+</ol>
+<h3 id="如何对梯度下降法进行调优"><a href="#如何对梯度下降法进行调优" class="headerlink" title="如何对梯度下降法进行调优?"></a>如何对梯度下降法进行调优?</h3><ol>
+<li><p>算法迭代步长选择<br>在算法参数初始化时，有时根据经验将步长初始化为1。实际取值取决于数据样本。可以从大到小，多取一些值，分别运行算法看迭代效果，如果损失函数在变小，则取值有效。如果取值无效，说明要增大步长。但步长太大，有时会导致迭代速度过快，错过最优解。步长太小，迭代速度慢，算法运行时间长。</p>
+</li>
+<li><p>参数的初始值选择<br>初始值不同，获得的最小值也有可能不同，梯度下降有可能得到的是局部最小值。如果损失函数是凸函数，则一定是最优解。由于有局部最优解的风险，需要多次用不同初始值运行算法，关键损失函数的最小值，选择损失函数最小化的初值。</p>
+</li>
+<li><p>标准化处理<br>由于样本不同，特征取值范围也不同，导致迭代速度慢。为了减少特征取值的影响，可对特征数据标准化，使新期望为0，新方差为1，可节省算法运行时间。</p>
+</li>
+</ol>
+<h3 id="随机梯度下降法、批量梯度下降法有哪些区别？-1"><a href="#随机梯度下降法、批量梯度下降法有哪些区别？-1" class="headerlink" title="随机梯度下降法、批量梯度下降法有哪些区别？"></a>随机梯度下降法、批量梯度下降法有哪些区别？</h3><p>批量梯度下降：<br>(1) 采用所有数据来梯度下降。<br>(2) 批量梯度下降法在样本量很大的时候，训练速度慢。<br>随机梯度下降<br>(1) 随机梯度下降用一个样本来梯度下降。<br>(2) 训练速度很快。<br>(3) 随机梯度下降法仅仅用一个样本决定梯度方向，导致解有可能不是全局最优。<br>(4) 收敛速度来说，随机梯度下降法一次迭代一个样本，导致迭代方向变化很大，不能很快的收敛到局部最优解。  </p>
+<h3 id="梯度下降法缺点"><a href="#梯度下降法缺点" class="headerlink" title="梯度下降法缺点"></a>梯度下降法缺点</h3><p>梯度下降法是最早最简单，也是最为常用的最优化方法。梯度下降法实现简单，当目标函数是凸函数时，梯度下降法的解是全局解。<br>一般情况下，其解不保证是全局最优解，梯度下降法的速度也未必是最快的。梯度下降法的优化思想是用当前位置负梯度方向作为搜索方向，因为该方向为当前位置的最快下降方向，所以也被称为是”最速下降法“。最速下降法越接近目标值，步长越小，前进越慢。</p>
+<p>梯度下降法缺点有以下几点：<br>（1）靠近极小值时收敛速度减慢。<br>在极小值点附近的话，梯度比较小了，毕竟那个点的梯度都快为零了，收敛的就慢了<br>（2）直线搜索时可能会产生一些问题。<br>步子大或者小会导致来回的震荡，导致不太好收敛<br>（3）可能会“之字形”地下降。<br>如下所示，梯度下降会来回走之字，导致优化速度慢</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40722827/article/details/107297535、">https://blog.csdn.net/qq_40722827/article/details/107297535、</a></p>
+<h3 id="批量梯度下降和随机梯度下降法的缺点？"><a href="#批量梯度下降和随机梯度下降法的缺点？" class="headerlink" title="批量梯度下降和随机梯度下降法的缺点？"></a>批量梯度下降和随机梯度下降法的缺点？</h3><p>批量梯度下降<br>a）采用所有数据来梯度下降。<br>b）批量梯度下降法在样本量很大的时候，训练速度慢。<br>随机梯度下降<br>a）随机梯度下降用一个样本来梯度下降。<br>b）训练速度很快。<br>c）随机梯度下降法仅仅用一个样本决定梯度方向，导致解有可能不是全局最优。<br>d）收敛速度来说，随机梯度下降法一次迭代一个样本，导致迭代方向变化很大，不能很快的收敛到局部最优解。  </p>
+<h3 id="如何对梯度下降法进行调优-1"><a href="#如何对梯度下降法进行调优-1" class="headerlink" title="如何对梯度下降法进行调优?"></a>如何对梯度下降法进行调优?</h3><p>实际使用梯度下降法时，各项参数指标不能一步就达到理想状态，对梯度下降法调优主要体现在以下几个方面：</p>
+<p>（1）算法迭代步长$\alpha$选择。 在算法参数初始化时，有时根据经验将步长初始化为1。实际取值取决于数据样本。可以从大到小，多取一些值，分别运行算法看迭代效果，如果损失函数在变小，则取值有效。如果取值无效，说明要增大步长。但步长太大，有时会导致迭代速度过快，错过最优解。步长太小，迭代速度慢，算法运行时间长。</p>
+<p>（2）参数的初始值选择。 初始值不同，获得的最小值也有可能不同，梯度下降有可能得到的是局部最小值。如果损失函数是凸函数，则一定是最优解。由于有局部最优解的风险，需要多次用不同初始值运行算法，关键损失函数的最小值，选择损失函数最小化的初值。</p>
+<p>（3）标准化处理。 由于样本不同，特征取值范围也不同，导致迭代速度慢。为了减少特征取值的影响，可对特征数据标准化，使新期望为0，新方差为1，可节省算法运行时间。</p>
+<h3 id="各种梯度下降法性能比较"><a href="#各种梯度下降法性能比较" class="headerlink" title="各种梯度下降法性能比较"></a>各种梯度下降法性能比较</h3><p>对比维度-BGD-SGD-Mini-batch GD-Online GD<br>训练集-固定-固定-固定-实时更新<br>单次迭代样本数-整个训练集-单个样本-训练集的子集-根据具体算法定<br>算法复杂度-高-低-一般-低<br>时效性-低-一般-一般-高<br>收敛性-稳定-不稳定-较稳定-不稳定  </p>
+<h3 id="为什么归一化能加快梯度下降法求优化速度？"><a href="#为什么归一化能加快梯度下降法求优化速度？" class="headerlink" title="为什么归一化能加快梯度下降法求优化速度？"></a>为什么归一化能加快梯度下降法求优化速度？</h3><p>归一化后的数据有助于在求解是缓解求解过程中的参数寻优的动荡，以加快收敛。对于不归一化的收敛，可以发现其参数更新、收敛如左图，归一化后的收敛如右图。可以看到在左边是呈现出之字形的寻优路线，在右边则是呈现较快的梯度下降。<br><img src="https://img-blog.csdnimg.cn/9c7f06b6c6b04381916796a03570cfb5.png" alt="img"></p>
+<h3 id="标准化和归一化有什么区别？"><a href="#标准化和归一化有什么区别？" class="headerlink" title="标准化和归一化有什么区别？"></a>标准化和归一化有什么区别？</h3><p>归一化是将样本的特征值转换到同一量纲下把数据映射到[0,1]或者[-1, 1]区间内，仅由变量的极值决定，因区间放缩法是归一化的一种。<br>$$
+x' = \frac{{x - \min (x)}}{{\max (x) - \min (x)}}
+$$<br>标准化是依照特征矩阵的列处理数据，其通过求z-score的方法，转换为标准正态分布，和整体样本分布相关，每个样本点都能对标准化产生影响。它们的相同点在于都能取消由于量纲不同引起的误差；都是一种线性变换，都是对向量X按照比例压缩再进行平移。<br>$$
+x' = \frac{{x - \bar x}}{\sigma }
+$$</p>
+<h3 id="批量梯度下降和随机梯度下降法的缺点"><a href="#批量梯度下降和随机梯度下降法的缺点" class="headerlink" title="批量梯度下降和随机梯度下降法的缺点"></a>批量梯度下降和随机梯度下降法的缺点</h3><p>批量梯度下降  </p>
+<p>a）采用所有数据来梯度下降。  </p>
+<p>b）批量梯度下降法在样本量很大的时候，训练速度慢。  </p>
+<p>随机梯度下降  </p>
+<p>a）随机梯度下降用一个样本来梯度下降。  </p>
+<p>b）训练速度很快。  </p>
+<p>c）随机梯度下降法仅仅用一个样本决定梯度方向，导致解有可能不是全局最优。  </p>
+<p>d）收敛速度来说，随机梯度下降法一次迭代一个样本，导致迭代方向变化很大，不能很快的收敛到局部最优解。  </p>
+<h3 id="极大似然估计和最小二乘法区别？"><a href="#极大似然估计和最小二乘法区别？" class="headerlink" title="极大似然估计和最小二乘法区别？"></a>极大似然估计和最小二乘法区别？</h3><p>对于最小二乘法，当从模型总体随机抽取n组样本观测值后，最合理的参数估计量应该使得模型能最好地拟合样本数据，也就是估计值和观测值之差的平方和最小。</p>
+<p>而对于最大似然法，当从模型总体随机抽取n组样本观测值后，最合理的参数估计量应该使得从模型中抽取该n组样本观测值的概率最大。</p>
+<p>在最大似然法中，通过选择参数，使已知数据在某种意义下最有可能出现，而某种意义通常指似然函数最大，而似然函数又往往指数据的概率分布函数。与最小二乘法不同的是，最大似然法需要已知这个概率分布函数，这在实践中是很困难的。一般假设其满足正态分布函数的特性，在这种情况下，最大似然估计和最小二乘估计相同。</p>
+<p>最小二乘法以估计值与观测值的差的平方和作为损失函数，极大似然法则是以最大化目标值的似然概率函数为目标函数，从概率统计的角度处理线性回归并在似然概率函数为高斯函数的假设下同最小二乘建立了的联系。</p>
+<h2 id="信息论"><a href="#信息论" class="headerlink" title="信息论"></a>信息论</h2><h3 id="什么是信息增益？"><a href="#什么是信息增益？" class="headerlink" title="什么是信息增益？"></a>什么是信息增益？</h3><p>定义：以某特征划分数据集前后的熵的差值。 熵可以表示样本集合的不确定性，熵越大，样本的不确定性就越大。因此可以使用划分前后集合熵的差值来衡量使用当前特征对于样本集合D划分效果的好坏。  假设划分前样本集合D的熵为H(D)。使用某个特征A划分数据集D，计算划分后的数据子集的熵为H(D|A)。<br>则信息增益为：g(D,A)=H(D)-H(D|A)</p>
+<h3 id="熵是什么？"><a href="#熵是什么？" class="headerlink" title="熵是什么？"></a>熵是什么？</h3><p>熵 Entropy 也叫信息熵（Information Entropy）或香农熵（Shannon Entropy）,是度量 信息的随机度和不确定度。实验中的不确定性使用熵来测量，因此，如果实验中存在固有的不确定性越多，那么它的熵就会越高。</p>
+<h3 id="交叉熵表示的意义是什么？"><a href="#交叉熵表示的意义是什么？" class="headerlink" title="交叉熵表示的意义是什么？"></a>交叉熵表示的意义是什么？</h3><p>交叉熵（Cross-Entropy）用来比较两个概率分布的。它会告诉我们两个分布的相似程度。 在同一组结果上定义的两个概率分布p和q之间的交叉熵，也就是$H(p,q) = \sum {p\log q}$.</p>
+<h3 id="KL散度是什么？"><a href="#KL散度是什么？" class="headerlink" title="KL散度是什么？"></a>KL散度是什么？</h3><p>KL 散度通常用来度量两个分布之间的差异。KL 散度全称叫kullback leibler 散度，也叫做相对熵（relative entropy）。在机器学习中常用到，譬如近似推断中，有变分推断和期望传播，都是通过 Minimize KL散度来实现推断实现逼近目标分布。<br>$$
+{D_{kl}}(A||B) = \sum\limits_i {{p_A}({v_i})\log \frac{{{p_A}({v_i})}}{{{p_B}({v_i})}}}
+$$</p>
+<h3 id="KL散度有哪些问题，该如何解决？"><a href="#KL散度有哪些问题，该如何解决？" class="headerlink" title="KL散度有哪些问题，该如何解决？"></a>KL散度有哪些问题，该如何解决？</h3><p>我们从上面的公式可以看到，KL上散度是非对称的，因此在算两个分布相似性的时候，分布计算的顺序会影响到计算的结果，因此有的时候会导致无法解释。为了解决这个这个问题，可以使用JS散度，计算结果如下：<br>$$
+{D_{js}}(A||B) = \frac{1}{2}({D_{kl}}(A||B) + {D_{kl}}(B||A))
+$$</p>
+<h3 id="KL散度和交叉熵的区别？"><a href="#KL散度和交叉熵的区别？" class="headerlink" title="KL散度和交叉熵的区别？"></a>KL散度和交叉熵的区别？</h3><p>从交叉熵的定义来看，得到KL散度的计算方法如下：<br>$$
+H(A,B) = {D_{kl}}(A||B) + S(A)
+$$<br>可以看到两者相差一个常数，优化的时候可以看到两者是一样的。</p>
+<h3 id="什么是最大熵模型以及它的基本原理？"><a href="#什么是最大熵模型以及它的基本原理？" class="headerlink" title="什么是最大熵模型以及它的基本原理？"></a>什么是最大熵模型以及它的基本原理？</h3><p>MaxEnt （最大熵模型）是概率模型学习中一个准则，其思想为：在学习概率模型时，所有可能的模型中熵最大的模型是最好的模型；若概率模型需要满足一些约束，则最大熵原理就是在满足已知约束的条件集合中选择熵最大模型。最大熵原理指出，对一个随机事件的概率分布进行预测时，预测应当满足全部已知的约束，而对未知的情况不要做任何主观假设。在这种情况下，概率分布最均匀，预测的风险最小，因此得到的概率分布的熵是最大</p>
+<h3 id="最大熵与逻辑回归的区别？"><a href="#最大熵与逻辑回归的区别？" class="headerlink" title="最大熵与逻辑回归的区别？"></a>最大熵与逻辑回归的区别？</h3><p>逻辑回归是最大熵对应类别为两类时的特殊情况，也就是当逻辑回归类别扩展到多类别时，就是最大熵。</p>
+<p>其联系在于：最大熵与逻辑回归均属于对数线性模型。它们的学习一般采用极大似然估计，或正则化的极大似然估计，可以形式化为无约束最优化问题。求解该优化问题的算法有改进的迭代尺度法、梯度下降法、拟牛顿法。<br>指数簇分布的最大熵等价于其指数形式的最大似然界；二项式的最大熵解等价于二项式指数形式(sigmoid)的最大似然，多项式分布的最大熵等价于多项式分布指数形式(softmax)的最大似然。</p>
+<h3 id="最大熵优缺点？"><a href="#最大熵优缺点？" class="headerlink" title="最大熵优缺点？"></a>最大熵优缺点？</h3><p>最大熵模型的优点有：</p>
+<ul>
+<li>最大熵统计模型获得的是所有满足约束条件的模型中信息熵极大的模型,作为经典的分类模型时准确率较高。</li>
+<li>可以灵活地设置约束条件，通过约束条件的多少可以调节模型对未知数据的适应度和对已知数据的拟合程度。</li>
+</ul>
+<p>最大熵模型的缺点有：</p>
+<ul>
+<li>由于约束函数数量和样本数目有关系，导致迭代过程计算量巨大，实际应用比较难。</li>
+</ul>
+<h3 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/SecondLieutenant/article/details/79042717">https://blog.csdn.net/SecondLieutenant/article/details/79042717</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hellojamest/p/10862264.html">https://www.cnblogs.com/hellojamest/p/10862264.html</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/292434104">https://zhuanlan.zhihu.com/p/292434104</a></p>
+</blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="分类问题标签长尾分布该怎么办？"><a href="#分类问题标签长尾分布该怎么办？" class="headerlink" title="分类问题标签长尾分布该怎么办？"></a>分类问题标签长尾分布该怎么办？</h3><p>1.最常用的技巧，up-sampling 或 down-sampling, 其实在 long tail 的 data 做这两种 sampling 都不是特别好的办法. 由于 tail label 数据非常 scarce, 如果对 head label 做 down-sampling 会丢失绝大部分信息. 同理, 对 tail label 做 up-sampling, 则引入大量冗余数据. 这里有篇文章对比了这两种采样方法。 可以参考文献1</p>
+<p>2.divide-and-conquer, 即将 head label 和 tail label 分别建模. 比如先利用 data-rich 的 head label 训练 deep model, 然后将学到的样本的 representation 迁移到 tail label model, 利用少量 tail label data 做 fine-tune. 具体做法可以参考文献2</p>
+<p>3.对 label 加权, 每个 label 赋予不同的 cost. 如给予 head label 较低的 weight, 而 tail label 则给予较高的 weight, 但是这个权重是怎么设置还需要参考相关文献。</p>
+<h3 id="当机器学习性能不是很好时，你会如何优化？"><a href="#当机器学习性能不是很好时，你会如何优化？" class="headerlink" title="当机器学习性能不是很好时，你会如何优化？"></a>当机器学习性能不是很好时，你会如何优化？</h3><ol>
+<li>基于数据来改善性能  </li>
+<li>基于算法  </li>
+<li>算法调参</li>
+<li>模型融合  </li>
+</ol>
+<h3 id="包含百万、上亿特征的数据在深度学习中怎么处理？"><a href="#包含百万、上亿特征的数据在深度学习中怎么处理？" class="headerlink" title="包含百万、上亿特征的数据在深度学习中怎么处理？"></a>包含百万、上亿特征的数据在深度学习中怎么处理？</h3><p>这么多的特征，肯定不能直接拿去训练，特征多，数据少，很容易导致模型过拟合。<br>（1）特征降维：PCA或LDA<br>（2）使用正则化，L1或L2<br>引入 L_1 范数除了降低过拟合风险之外，还有一个好处：它求得的 w 会有较多的分量为零。即：它更容易获得稀疏解。<br>（3）样本扩充：数据增强<br>（4）特征选择：去掉不重要的特征</p>
+<h3 id="类别型数据你是如何处理的？比如游戏品类，地域，设备？"><a href="#类别型数据你是如何处理的？比如游戏品类，地域，设备？" class="headerlink" title="类别型数据你是如何处理的？比如游戏品类，地域，设备？"></a>类别型数据你是如何处理的？比如游戏品类，地域，设备？</h3><p>序号编码、one-hot编码、多热编码，二进制编码，搞成嵌入向量</p>
+<h3 id="参考-3"><a href="#参考-3" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46838716/article/details/124424903">https://blog.csdn.net/weixin_46838716/article/details/124424903</a><br>learning-to-model-the-tail<br>deepxml: scalable &amp; accurate deep extreme classification for matching user ueries to advertiser bid phrases<br>extreme multi-label learning with label features for warm-start tagging, ranking &amp; recommendation</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%88%B7%E5%85%AB%E8%82%A1/" rel="tag"># 刷八股</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%91%E6%A8%A1%E5%9E%8B/" rel="prev" title="树模型">
+      <i class="fa fa-chevron-left"></i> 树模型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%B8%B8%E8%A7%81%E6%A8%A1%E5%9E%8B/" rel="next" title="推荐系统常见模型">
+      推荐系统常见模型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">机器学习理论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86"><span class="nav-number">1.1.</span> <span class="nav-text">数学知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%B7%9D%E7%A6%BB%E5%92%8C%E7%9B%B8%E4%BC%BC%E5%BA%A6%E5%BA%A6%E9%87%8F%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">机器学习中的距离和相似度度量方式有哪些？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%AC%E6%B0%8F%E8%B7%9D%E7%A6%BB%E6%AF%94%E6%AC%A7%E5%BC%8F%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%BC%82%E5%90%8C%E7%82%B9%EF%BC%9F"><span class="nav-number">1.1.2.</span> <span class="nav-text">马氏距离比欧式距离的异同点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%A0%E9%87%8F%E4%B8%8E%E7%9F%A9%E9%98%B5%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.1.3.</span> <span class="nav-text">张量与矩阵的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E7%9F%A9%E9%98%B5%E4%B8%BA%E6%AD%A3%E5%AE%9A%EF%BC%9F"><span class="nav-number">1.1.4.</span> <span class="nav-text">如何判断矩阵为正定？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%9D%E7%A6%BB%E7%9A%84%E4%B8%A5%E6%A0%BC%E5%AE%9A%E4%B9%89%EF%BC%9F"><span class="nav-number">1.1.5.</span> <span class="nav-text">距离的严格定义？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.1.6.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E8%AE%BA"><span class="nav-number">1.2.</span> <span class="nav-text">概率论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A6%82%E7%8E%87%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">什么是概率？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%92%8C%E9%A2%91%E7%8E%87%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.2.2.</span> <span class="nav-text">概率和频率的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%8A%E6%9D%BE%E5%88%86%E5%B8%83%E4%B8%8E%E4%BA%8C%E9%A1%B9%E5%88%86%E5%B8%83%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="nav-number">1.2.3.</span> <span class="nav-text">泊松分布与二项分布的关系？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%88%86%E5%B8%83%E7%9A%84%E6%9C%9F%E6%9C%9B%E5%92%8C%E6%96%B9%E5%B7%AE%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.4.</span> <span class="nav-text">常见分布的期望和方差是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%A7%E6%95%B0%E5%AE%9A%E7%90%86%EF%BC%9F"><span class="nav-number">1.2.5.</span> <span class="nav-text">什么是大数定理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%EF%BC%9F"><span class="nav-number">1.2.6.</span> <span class="nav-text">什么是中心极限定理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1%E9%87%8F%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4%EF%BC%9F"><span class="nav-number">1.2.7.</span> <span class="nav-text">求最大似然估计量的一般步骤？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%97%A0%E5%81%8F%E6%80%A7%EF%BC%9F"><span class="nav-number">1.2.8.</span> <span class="nav-text">什么是无偏性？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8B%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E3%80%81%E5%85%A8%E6%A6%82%E7%8E%87%E5%92%8C%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%85%AC%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.2.9.</span> <span class="nav-text">说一下条件概率、全概率和贝叶斯公式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%A7%A3%E9%87%8A%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1%E6%B3%95%E5%92%8C%E6%A6%82%E7%8E%87%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.10.</span> <span class="nav-text">一句话解释极大似然估计法和概率的区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1%EF%BC%8C%E6%9C%80%E5%A4%A7%E5%90%8E%E9%AA%8C%E4%BC%B0%E8%AE%A1%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.2.11.</span> <span class="nav-text">极大似然估计，最大后验估计的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E6%96%B9%E5%B7%AE%E4%B8%BA0%EF%BC%8C%E4%B8%80%E5%AE%9A%E7%8B%AC%E7%AB%8B%E5%90%97%EF%BC%9F"><span class="nav-number">1.2.12.</span> <span class="nav-text">协方差为0，一定独立吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83-1"><span class="nav-number">1.2.13.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">学习理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%EF%BC%9F"><span class="nav-number">1.3.1.</span> <span class="nav-text">什么是表示学习？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%AB%AF%E5%88%B0%E7%AB%AF%E5%AD%A6%E4%B9%A0%EF%BC%9F"><span class="nav-number">1.3.2.</span> <span class="nav-text">什么是端到端学习？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F%E4%B8%BB%E8%A6%81%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">1.3.3.</span> <span class="nav-text">机器学习的学习方式主要有哪些?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BC%80%E5%B1%95%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.3.4.</span> <span class="nav-text">如何开展监督学习?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%88%AB%E4%B8%8D%E5%9D%87%E8%A1%A1%E9%97%AE%E9%A2%98%E6%80%8E%E4%B9%88%E5%81%9A"><span class="nav-number">1.3.5.</span> <span class="nav-text">类别不均衡问题怎么做?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%E7%81%BE%E9%9A%BE%E6%98%AF%E5%95%A5%EF%BC%9F%E6%80%8E%E4%B9%88%E9%81%BF%E5%85%8D%EF%BC%9F"><span class="nav-number">1.3.6.</span> <span class="nav-text">维度灾难是啥？怎么避免？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.7.</span> <span class="nav-text">生成模型和判别模型的区别?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA"><span class="nav-number">1.4.</span> <span class="nav-text">优化理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%B8%E4%BC%98%E5%8C%96%EF%BC%9F"><span class="nav-number">1.4.1.</span> <span class="nav-text">什么是凸优化？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%B8%E4%BC%98%E5%8C%96%E7%9A%84%E4%BC%98%E5%8A%BF%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.4.2.</span> <span class="nav-text">凸优化的优势是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%87%BD%E6%95%B0%E6%98%AF%E5%90%A6%E4%B8%BA%E5%87%B8%E7%9A%84"><span class="nav-number">1.4.3.</span> <span class="nav-text">如何判断函数是否为凸的?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9E%8D%E7%82%B9%EF%BC%9F"><span class="nav-number">1.4.4.</span> <span class="nav-text">什么是鞍点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E4%BB%80%E4%B9%88%E6%98%AF%E5%B1%80%E9%83%A8%E6%9E%81%E5%B0%8F%E5%80%BC%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%85%A8%E5%B1%80%E6%9E%81%E5%B0%8F%E5%80%BC%EF%BC%9F"><span class="nav-number">1.4.5.</span> <span class="nav-text">解释什么是局部极小值，什么是全局极小值？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A2%E7%84%B6%E6%9C%89%E5%85%A8%E5%B1%80%E6%9C%80%E4%BC%98%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81%E6%9C%89%E5%B1%80%E9%83%A8%E6%9C%80%E4%BC%98%E5%91%A2%EF%BC%9F"><span class="nav-number">1.4.6.</span> <span class="nav-text">既然有全局最优，为什么还需要有局部最优呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-number">1.4.7.</span> <span class="nav-text">机器学习有哪些优化方法？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E5%92%8C%E7%89%9B%E9%A1%BF%E6%B3%95%E8%83%BD%E4%BF%9D%E8%AF%81%E6%89%BE%E5%88%B0%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E5%B0%8F%E5%80%BC%E7%82%B9%E5%90%97%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.4.8.</span> <span class="nav-text">梯度下降法和牛顿法能保证找到函数的极小值点吗，为什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E4%B8%80%E5%85%83%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC%E5%88%A4%E5%88%AB%E6%B3%95%E5%88%99%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.4.9.</span> <span class="nav-text">解释一元函数极值判别法则是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC%E5%88%A4%E5%88%AB%E6%B3%95%E5%88%99%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.4.10.</span> <span class="nav-text">解释多元函数极值判别法则是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">1.4.11.</span> <span class="nav-text">什么是对偶问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E3%80%81%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.4.12.</span> <span class="nav-text">随机梯度下降法、批量梯度下降法有哪些区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94%EF%BC%9F"><span class="nav-number">1.4.13.</span> <span class="nav-text">各种梯度下降法性能对比？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8B%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%BC%BA%E7%82%B9"><span class="nav-number">1.4.14.</span> <span class="nav-text">说一下梯度下降法缺点?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AF%B9%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E8%BF%9B%E8%A1%8C%E8%B0%83%E4%BC%98"><span class="nav-number">1.4.15.</span> <span class="nav-text">如何对梯度下降法进行调优?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E3%80%81%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%E5%8C%BA%E5%88%AB%EF%BC%9F-1"><span class="nav-number">1.4.16.</span> <span class="nav-text">随机梯度下降法、批量梯度下降法有哪些区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%BC%BA%E7%82%B9"><span class="nav-number">1.4.17.</span> <span class="nav-text">梯度下降法缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%92%8C%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%9A%84%E7%BC%BA%E7%82%B9%EF%BC%9F"><span class="nav-number">1.4.18.</span> <span class="nav-text">批量梯度下降和随机梯度下降法的缺点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AF%B9%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E8%BF%9B%E8%A1%8C%E8%B0%83%E4%BC%98-1"><span class="nav-number">1.4.19.</span> <span class="nav-text">如何对梯度下降法进行调优?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83"><span class="nav-number">1.4.20.</span> <span class="nav-text">各种梯度下降法性能比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BD%92%E4%B8%80%E5%8C%96%E8%83%BD%E5%8A%A0%E5%BF%AB%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E6%B1%82%E4%BC%98%E5%8C%96%E9%80%9F%E5%BA%A6%EF%BC%9F"><span class="nav-number">1.4.21.</span> <span class="nav-text">为什么归一化能加快梯度下降法求优化速度？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%8C%96%E5%92%8C%E5%BD%92%E4%B8%80%E5%8C%96%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.4.22.</span> <span class="nav-text">标准化和归一化有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%92%8C%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.4.23.</span> <span class="nav-text">批量梯度下降和随机梯度下降法的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.4.24.</span> <span class="nav-text">极大似然估计和最小二乘法区别？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E8%AE%BA"><span class="nav-number">1.5.</span> <span class="nav-text">信息论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BF%A1%E6%81%AF%E5%A2%9E%E7%9B%8A%EF%BC%9F"><span class="nav-number">1.5.1.</span> <span class="nav-text">什么是信息增益？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%86%B5%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.5.2.</span> <span class="nav-text">熵是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E8%A1%A8%E7%A4%BA%E7%9A%84%E6%84%8F%E4%B9%89%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.5.3.</span> <span class="nav-text">交叉熵表示的意义是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KL%E6%95%A3%E5%BA%A6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.5.4.</span> <span class="nav-text">KL散度是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KL%E6%95%A3%E5%BA%A6%E6%9C%89%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98%EF%BC%8C%E8%AF%A5%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%EF%BC%9F"><span class="nav-number">1.5.5.</span> <span class="nav-text">KL散度有哪些问题，该如何解决？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KL%E6%95%A3%E5%BA%A6%E5%92%8C%E4%BA%A4%E5%8F%89%E7%86%B5%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.5.6.</span> <span class="nav-text">KL散度和交叉熵的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B%E4%BB%A5%E5%8F%8A%E5%AE%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="nav-number">1.5.7.</span> <span class="nav-text">什么是最大熵模型以及它的基本原理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E7%86%B5%E4%B8%8E%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.5.8.</span> <span class="nav-text">最大熵与逻辑回归的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E7%86%B5%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F"><span class="nav-number">1.5.9.</span> <span class="nav-text">最大熵优缺点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83-2"><span class="nav-number">1.5.10.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.6.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E6%A0%87%E7%AD%BE%E9%95%BF%E5%B0%BE%E5%88%86%E5%B8%83%E8%AF%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">1.6.1.</span> <span class="nav-text">分类问题标签长尾分布该怎么办？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%80%A7%E8%83%BD%E4%B8%8D%E6%98%AF%E5%BE%88%E5%A5%BD%E6%97%B6%EF%BC%8C%E4%BD%A0%E4%BC%9A%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%EF%BC%9F"><span class="nav-number">1.6.2.</span> <span class="nav-text">当机器学习性能不是很好时，你会如何优化？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E7%99%BE%E4%B8%87%E3%80%81%E4%B8%8A%E4%BA%BF%E7%89%B9%E5%BE%81%E7%9A%84%E6%95%B0%E6%8D%AE%E5%9C%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-number">1.6.3.</span> <span class="nav-text">包含百万、上亿特征的数据在深度学习中怎么处理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%88%AB%E5%9E%8B%E6%95%B0%E6%8D%AE%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%9A%84%EF%BC%9F%E6%AF%94%E5%A6%82%E6%B8%B8%E6%88%8F%E5%93%81%E7%B1%BB%EF%BC%8C%E5%9C%B0%E5%9F%9F%EF%BC%8C%E8%AE%BE%E5%A4%87%EF%BC%9F"><span class="nav-number">1.6.4.</span> <span class="nav-text">类别型数据你是如何处理的？比如游戏品类，地域，设备？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83-3"><span class="nav-number">1.6.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tom</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tom</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
